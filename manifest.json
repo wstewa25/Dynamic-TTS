@@ -1,0 +1,10 @@
+{
+  "name": "Extension Demo",
+  "version": "1.0",
+  "description": "A text reader that reads through comment threads with unique voices in a conversational style",
+  "permissions": ["activeTab"],
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "manifest_version": 2
+}
