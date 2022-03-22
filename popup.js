@@ -25,19 +25,32 @@ function main() {
 
             // grabs replies only until the first loaded set on the page
             r.getSubmission(submissionID).expandReplies({limit: 1, depth: 1}).catch({ statusCode: 429 }, function() {}).then(s => {
-                // get author and comment text for each individual comment
+                // get author, comment text, and replies in the format i set for each individual comment
                 s.comments.forEach(c => {
-                    thread.push({ 
-                        author: c.author.name, 
-                        body: c.body
-                    });
+                    thread.push(getAllReplies(c));
                 });
             });
-            // r.getSubmission('4j8p6d').expandReplies({limit: 1, depth: 1}).catch({ statusCode: 429 }, function() {}).then(console.log);
 
             console.log(thread);
         }
     }
+}
+
+function getAllReplies(comment) {
+    // set comment to this format
+    let c = {
+        author: comment.author.name,
+        body: comment.body,
+        replies: []
+    };
+
+    // get each reply and loop recursively so all comments are in the same format
+    comment.replies.forEach(r => {
+        c.replies.push(getAllReplies(r));
+    });
+
+    // a comment that has no replies will skip the foreach loop and go here, and return the properly formatted comment
+    return c;
 }
 
 async function getCurrentTab() {
