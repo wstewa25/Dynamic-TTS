@@ -13,8 +13,26 @@ function init() {
 
 function main() {
     activeTab = document.getElementById("output").innerHTML;
-    
-    r.getSubmission('4j8p6d').expandReplies({limit: Infinity, depth: Infinity}).then(console.log)
+
+    if (activeTab.includes("reddit.com/r/")) {
+        if (activeTab.includes("/comments/")) {
+            let thread = [];
+            let submissionID = activeTab.split("/");
+            submissionID = submissionID[submissionID.indexOf("comments") + 1];
+
+            r.getSubmission(submissionID).expandReplies({limit: 1, depth: 1}).catch({ statusCode: 429 }, function() {}).then(s => {
+                s.comments.forEach(c => {
+                    thread.push({ 
+                        author: c.author.name, 
+                        body: c.body
+                    });
+                });
+            });
+            // r.getSubmission('4j8p6d').expandReplies({limit: 1, depth: 1}).catch({ statusCode: 429 }, function() {}).then(console.log);
+
+            console.log(thread);
+        }
+    }
 }
 
 async function getCurrentTab() {
