@@ -1,0 +1,21 @@
+
+{
+    "manifest_version": 3,
+  
+    "name": "test",
+    "description": "do i work",
+    "version": "1.0",
+    "chrome_url_overrides": {
+        "newtab": "./index.ejs"
+      },
+  
+    "action": {
+     "default_icon": "icons/icon.png"
+    },
+
+    "permissions": [
+     "tabs",
+     "webRequest",
+     "tts"
+    ]
+  }

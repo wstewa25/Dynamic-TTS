@@ -4,14 +4,15 @@
     <head>
         <script type="text/javascript" src="snoowrap-v1.js"></script>
         <script type="text/javascript" src="popup.js"></script>
+        <script src="speaktest.js"></script>
     </head>
     <body>
         <div id="main">
             <p id="output">test text</p>
             <form>
-                <label for="test_read">First name:</label>
+                <label for="test_read">Text to read:</label>
                 <input type="text" id="test_read" name="test_read"><br><br>
-                <submit value = "Read"></submit>
+                <input type="submit" value = "Read" id = "submit_text">
             </form>
         </div>
     </body>
