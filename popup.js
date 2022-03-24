@@ -79,7 +79,7 @@ window.onload = function() {
  */
 
 //let tts = class tts {
-// save default keyboard bindings in order to be able to restore defaults if needed
+// save default keyboard bindings in order to be able to restore if needed
 let keyDefaults = {
     // pause or play recording
     pausePlay: [ "Space" ], // stored in arrays to allow for any function to require multiple keys
@@ -100,14 +100,19 @@ let keyDefaults = {
     // set read speed to min
     speedMin: [ "Control", "ArrowLeft" ],
     // read comments in forward or backward order
-    orderToggle: [ "Control", "Comma" ] // js has "AltLeft" and "AltRight", both should be viable
+    orderToggle: [ "Control", "Comma" ], // js has "AltLeft" and "AltRight", both should be viable
+    // increment volume by 1 unit
+    volumeUp: [ "Comma" ],
+    // decrement volume by 1 unit
+    volumeDown: [ "Period" ],
 };
 
+let keybinds = keyDefaults; // second dictionary should be used for active keybinds that can be changed
 // use one key to tell extension that it should use its keybinds
-let masterKey = "Shift"; // js has "ShiftLeft" and "ShiftRight", both should be viable
+keyDefaults.masterKey = "Shift"; // js has "ShiftLeft" and "ShiftRight", both should be viable
+let masterKey = keyDefaults.masterKey;
 let masterPressed = false;
 let keyStrokes = {};
-let keybinds = keyDefaults; // second dictionary should be used for active keybinds that can be changed
 
 // execute a keybind that's actively pressed down
 function keyAction(keybind) {
@@ -141,6 +146,12 @@ function keyAction(keybind) {
             break;
         case "orderToggle":
             console.log("toggle read direction");
+            break;
+        case "volumeUp":
+            console.log("volume up");
+            break;
+        case "volumeDown":
+            console.log("volume down");
             break;
         default:
             console.log(keybind);
@@ -222,6 +233,8 @@ function changeKeybind(keybind, newKeys) {
             return true;
         }
     }
+
+    return false;
 }
 
 function changeMasterKey(newKey) {
@@ -241,6 +254,7 @@ function changeMasterKey(newKey) {
     } else {
         // no conflicts
         masterKey = newKey;
+        return true;
     }
 }
 
