@@ -1,3 +1,4 @@
+
 // connects to my personal reddit account to get posts
 let r = new snoowrap({
     userAgent: 'dynamic tts',
@@ -62,4 +63,3 @@ async function getCurrentTab() {
 
 window.onload = function() {
     init();
-};
