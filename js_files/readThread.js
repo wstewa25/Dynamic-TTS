@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 
     
     document.getElementById("readThreadTestButton").addEventListener("click", function(){
-        let readstr = readThread[1].body
+        let readstr = readThread[1].author + " says " + readThread[1].body; 
         readComment(readstr);
     });
 
