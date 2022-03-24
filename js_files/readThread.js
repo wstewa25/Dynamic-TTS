@@ -10,11 +10,23 @@ document.addEventListener('DOMContentLoaded', function(event) {
     //** object to receive audioContent response from api call
     var responseBody = {}
 
-    
+
     document.getElementById("readThreadTestButton").addEventListener("click", function(){
-        let readstr = readThread[1].author + " says " + readThread[1].body; 
-        readComment(readstr);
+        parseComments(readThread);
     });
+
+    function parseComments(readThread){
+        let readstr;
+        for (let i = 0; i < readThread.length; i++) {
+            readstr = readThread[i].author + " says " + readThread[i].body;
+            readComment(readstr);
+            if (typeof readThread[i].replies !== undefined && readThread[i].replies.length != 0) {
+                parseComments(readThread[i].replies);
+            }
+        }
+    }
+
+    
 
     function readComment(readstr) {
                 //mandatory
