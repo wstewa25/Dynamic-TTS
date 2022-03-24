@@ -1,4 +1,7 @@
 // connects to my personal reddit account to get posts
+readThread = []; //global variable to store the reddit thread array
+
+
 let r = new snoowrap({
     userAgent: 'dynamic tts',
     clientId: 'd3eJD1-Na1mmQ9On_Z13VQ',
@@ -19,16 +22,7 @@ function main() {
 
     if (activeTab.includes("reddit.com/r/")) { // only works if you're viewing a submission
         if (activeTab.includes("/comments/")) {
-
-            //Code to create a button to read the thread when we detect we are on reddit.
-            //Just putting this here to set up basic reading functionality.
-            const newButton = document.createElement("input");
-            newButton.setAttribute('type','button');
-            newButton.setAttribute('value', 'read thread');
-            newButton.setAttribute('id', 'readThreadTestButton');
-            const element = document.getElementById('readThreadTestDiv');
-            element.appendChild(newButton);
-
+            
             let thread = [];
             let submissionID = activeTab.split("/");
             submissionID = submissionID[submissionID.indexOf("comments") + 1]; // post id comes after /comments/
@@ -42,6 +36,7 @@ function main() {
             });
 
             console.log(thread);
+            readThread = thread; //put thread into global readThread
         }
     }
 }
