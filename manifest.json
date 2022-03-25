@@ -1,26 +1,19 @@
+
 {
     "manifest_version": 3,
   
-    "name": "Dynamic TTS",
-    "description": "Attach multiple voices to comment threads for a more life-like experience on social media.",
-    "version": "1.1",
+    "name": "test",
+    "description": "do i work",
+    "version": "1.0",
   
     "action": {
+     "default_icon": "icon.png",
      "default_popup": "popup.html"
-    },
-
-    "icons": {
-        "128": "icon_128.png",
-        "48": "icon_48.png",
-        "16": "icon_16.png"
     },
 
     "permissions": [
      "tabs",
-     "webRequest"
-    ],
-
-    "background": {
-        "service_worker": "background.js"
-    }
+     "webRequest",
+     "tts"
+    ]
   }
