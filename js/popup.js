@@ -1,3 +1,39 @@
+let queue = class queue {
+    constructor() {
+        this.head = null;
+        this.elements = [];
+    }
+
+    peek() {
+        return this.head;
+    }
+
+    enqueue(item) {
+        this.elements.push(item);
+        this.head = item;
+    }
+
+    dequeue() {
+        let removed = this.elements.shift();
+        if (this.elements.length == 0)
+            this.head = null;
+        else
+            this.head = this.elements[0];
+        
+        return removed;
+    }
+
+    size() {
+        return this.elements.length;
+    }
+
+    traverse() {
+        this.elements.forEach(c => {
+            console.log(c);
+        });
+    }
+}
+
 // connects to my personal reddit account to get posts
 let r = new snoowrap({
     userAgent: 'dynamic tts',
@@ -8,10 +44,30 @@ let r = new snoowrap({
 
 // just holds tab url
 let activeTab = "";
+let tabTrimmed = "";
+
+let thread = []
+let readerList = new queue();
 
 function init() {
     // everything needs to execute after the active tab has been found
     getCurrentTab().then(main);
+}
+
+function unpackComment(comment, flag) {
+    readerList.enqueue(comment.author + " " + flag + ": " + comment.body);
+
+    comment.replies.forEach(r => {
+        unpackComment(r, "replies");
+    });
+}
+
+function read(thread) {
+    for (let i = 0; i < thread.length; i++) {
+        unpackComment(thread[i], "says");
+    }
+
+    readerList.traverse();
 }
 
 function trimURL(url) {
@@ -52,10 +108,11 @@ function trimURL(url) {
 
 function main() {
     activeTab = document.getElementById("tabName").innerHTML;
+    tabTrimmed = trimURL(activeTab);
+    document.getElementById("tabName").innerHTML = tabTrimmed;
 
     if (activeTab.includes("reddit.com/")) { // only works if you're viewing a submission
         if (activeTab.includes("/comments/")) {
-            let thread = [];
             let submissionID = activeTab.split("/");
             submissionID = submissionID[submissionID.indexOf("comments") + 1]; // post id comes after /comments/
 
@@ -67,7 +124,10 @@ function main() {
                 });
             });
 
-            console.log(thread);
+            setTimeout(function () {
+                console.log(thread);
+                read(thread);
+            }, 3000);
         }
     }
 }
@@ -92,7 +152,7 @@ function getAllReplies(comment) {
 async function getCurrentTab() {
     let queryOptions = { active: true, currentWindow: true };
     let [tab] = await chrome.tabs.query(queryOptions);
-    document.getElementById("tabName").innerHTML = trimURL(tab.url);
+    document.getElementById("tabName").innerHTML = tab.url;
     return tab;
   }
 
