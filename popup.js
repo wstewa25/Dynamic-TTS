@@ -14,8 +14,44 @@ function init() {
     getCurrentTab().then(main);
 }
 
+function trimURL(url) {
+    let maxLength = 20; // maximum character length
+
+    if (url.includes("file://")) { // if tab is a file from machine
+        let urlBeginning = url.substring(0, 7);
+        let split = url.split("/");
+        let newURL = urlBeginning + split[split.length - 1];
+
+        if (newURL.length > maxLength)
+            newURL = newURL.substring(0, maxLength) + "...";
+
+        return newURL;
+    } else if (url.includes("chrome://")) { // if tab is a chrome page
+        if (url.length > maxLength)
+            url = url.substring(0, maxLength) + "...";
+
+        return url;
+    } else { // website
+        // detach "http(s)://www." prefix if it exists in the tab name
+        let split = url.split("://");
+        let newURL = split[split.length - 1];
+
+        if (newURL.includes("www.")) {
+            newURL = newURL.substring(4);
+        }
+
+        // i only want the website name
+        newURL = newURL.split("/")[0];
+
+        if (newURL.length > maxLength)
+            newURL = newURL.substring(0, maxLength) + "...";
+        
+        return newURL;
+    }
+}
+
 function main() {
-    activeTab = document.getElementById("output").innerHTML;
+    activeTab = document.getElementById("tabName").innerHTML;
 
     if (activeTab.includes("reddit.com/")) { // only works if you're viewing a submission
         if (activeTab.includes("/comments/")) {
@@ -56,7 +92,7 @@ function getAllReplies(comment) {
 async function getCurrentTab() {
     let queryOptions = { active: true, currentWindow: true };
     let [tab] = await chrome.tabs.query(queryOptions);
-    document.getElementById("output").innerHTML = tab.url;
+    document.getElementById("tabName").innerHTML = trimURL(tab.url);
     return tab;
   }
 
