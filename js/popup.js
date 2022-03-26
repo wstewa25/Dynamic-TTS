@@ -1,38 +1,4 @@
-let queue = class queue {
-    constructor() {
-        this.head = null;
-        this.elements = [];
-    }
-
-    peek() {
-        return this.head;
-    }
-
-    enqueue(item) {
-        this.elements.push(item);
-        this.head = item;
-    }
-
-    dequeue() {
-        let removed = this.elements.shift();
-        if (this.elements.length == 0)
-            this.head = null;
-        else
-            this.head = this.elements[0];
-        
-        return removed;
-    }
-
-    size() {
-        return this.elements.length;
-    }
-
-    traverse() {
-        this.elements.forEach(c => {
-            console.log(c);
-        });
-    }
-}
+let readerList = [];
 
 // connects to my personal reddit account to get posts
 let r = new snoowrap({
@@ -46,28 +12,13 @@ let r = new snoowrap({
 let activeTab = "";
 let tabTrimmed = "";
 
-let thread = []
-let readerList = new queue();
+let thread = [];
 
 function init() {
     // everything needs to execute after the active tab has been found
-    getCurrentTab().then(main);
-}
-
-function unpackComment(comment, flag) {
-    readerList.enqueue(comment.author + " " + flag + ": " + comment.body);
-
-    comment.replies.forEach(r => {
-        unpackComment(r, "replies");
+    getCurrentTab().then(result => {
+        main();
     });
-}
-
-function read(thread) {
-    for (let i = 0; i < thread.length; i++) {
-        unpackComment(thread[i], "says");
-    }
-
-    readerList.traverse();
 }
 
 function trimURL(url) {
@@ -124,10 +75,11 @@ function main() {
                 });
             });
 
-            setTimeout(function () {
-                console.log(thread);
+            // wait just a bit for program to catch up before making readerList
+            setTimeout(function() {
                 read(thread);
-            }, 3000);
+                console.log(readerList);
+            }, 1000);
         }
     }
 }
@@ -159,6 +111,22 @@ async function getCurrentTab() {
 window.onload = function() {
     init();
 };
+
+function unpackComment(comment, flag) {
+    readerList.push(comment.author + " " + flag + ": " + comment.body);
+
+    comment.replies.forEach(r => {
+        unpackComment(r, "replies");
+    });
+}
+
+function read(thread) {
+    for (let i = 0; i < thread.length; i++) {
+        unpackComment(thread[i], "says");
+    }
+
+    // readerList.traverse();
+}
 
 /* ******************************************************************************** */
 /*
