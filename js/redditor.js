@@ -51,7 +51,7 @@ class redditor {
     
         // get each reply and loop recursively so all comments are in the same format
         comment.replies.forEach(r => {
-            c.replies.push(getAllReplies(r));
+            c.replies.push(this.getAllReplies(r));
         });
     
         // a comment that has no replies will skip the foreach loop and go here and return the properly formatted comment
@@ -63,7 +63,7 @@ class redditor {
         list.push(comment.author + " " + flag + ": " + comment.body);
     
         comment.replies.forEach(r => {
-            this.unpackComment(r, "replies");
+            this.unpackComment(r, "replies", list);
         });
     }
     
@@ -202,7 +202,7 @@ class redditor {
 
             // spoiler doesn't and shouldn't be removed, but a "spoiler alert: " will be attached so the user knows one is coming up
             if (spoiler.active) {
-                let insert = "spoiler alert: ";
+                let insert = "spoiler alert... ";
 
                 comment = comment.substring(0, i - 2) + insert + comment.substring(i); // reformat comment to fit new injected string and remove '>!'
                 i += insert.length; // change i to continue normally after "spoiler alert: "
@@ -223,7 +223,7 @@ class redditor {
             }
 
             // look for use of !
-            if (comment[i] == spoiler.open2.symbol) {
+            if (spoiler.open1.active && comment[i] == spoiler.open2.symbol) {
                 spoiler.open2.active = true;
                 spoiler.open2.index = i;
                 spoiler.active = true;
