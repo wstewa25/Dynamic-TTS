@@ -20,25 +20,18 @@ class redditor {
             });
         });
 
-        // adding some fake comments to test if spoilers are re-formatted
-        this.thread.push({
-            author: 'fake_user_1',
-            body: '>!this is a message with a spoiler at the beginning',
-            replies: []
-        });
+        // adding some fake comments to test if comments are re-formatted
+        // this.thread.push({
+        //     author: 'fake_user_1',
+        //     body: 'this is a message >!with a spoiler in the middle',
+        //     replies: []
+        // });
 
-        // put spoilers in different areas to make sure any spot works
-        this.thread.push({
-            author: 'fake_user_2',
-            body: 'this is a message >!with a spoiler in the middle',
-            replies: []
-        });
-
-        this.thread.push({
-            author: 'fake_user_3',
-            body: 'this is a message with a spoiler at the >!end',
-            replies: []
-        });
+        // this.thread.push({
+        //     author: 'fake_user_2',
+        //     body: 'this message has 2 links. one link is to https://www.reddit.com/r/LodedDiper/. the other link is to https://www.youtube.com/. whoo',
+        //     replies: []
+        // });
     }
 
     getAllReplies(comment) {
@@ -96,145 +89,42 @@ class redditor {
     }
 
     reformatComment(comment) {
-        // all fields used in formatting links
-        let link = {
-            textOpen: {
-                index: 0,
-                symbol: '[',
-                active: false
-            },
-            textClose: {
-                index: 0,
-                symbol: ']',
-                active: false
-            },
-            linkOpen: {
-                index: 0,
-                symbol: '(',
-                active: false
-            },
-            linkClose: {
-                index: 0,
-                symbol: ')',
-                active: false
-            },
-            active: false
-        };
+        // test regex for url expression to see how many a comment contains
+        let matchURL = comment.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
 
-        // all fields for formating spoilers
-        let spoiler = {
-            open1: {
-                index: 0,
-                symbol: '>',
-                active: false
-            },
-            open2: {
-                index: 0,
-                symbol: '!',
-                active: false
-            },
-            active: false
+        if (matchURL) { // if urls are found
+            matchURL.forEach(url => {
+                comment = comment.replace(url, '... link to ' + this.trimURL(url) + '... '); // replace with trimmed url
+            });
         }
 
-        let commentURL = "";
-        for (let i = 0; i < comment.length; i++) {
-            // if ) has been found, then a user has definitely attempted to embed a link
-            if (link.linkClose.active) {
-                commentURL = this.trimURL(commentURL); // trim url to get very short version
-                let urlFill = "link to " + commentURL; // "link to" tells user a link has been embedded
+        // not all links on reddit are URLs, sometimes they're in-site links
+        // URLs already caught previously will be queried if they're in reddit's hyperlink format, but that's fine
+        let linkFormFound = true;
+        do {
+            let matchForm = comment.match(/\[.*\]\(.*\)/i); // look for '[...](...)'
 
-                comment = comment.substring(0, link.linkOpen.index + 1) + urlFill + comment.substring(link.linkClose.index); // reformat comment around new url
+            if (matchForm) {
+                let text = matchForm[0].split("]")[0].substring(1); // remove '['
 
-                i = link.linkOpen.index + 1 + urlFill.length; // change i so that loop continues normally after )
+                let link = matchForm[0].split("(")[1];
+                link = link.substring(0, link.length - 1); // remove ')'
+                
+                if (!link.includes("... link to"))
+                    link = "... link to " + this.trimURL(link) + "... "; // avoid seeing "link to... ...link to..."
+                else
+                    link = this.trimURL(link);
 
-                // re initialize. for some reason js does not want me to loop through the dict
-                link.textOpen.active = false;
-                link.textOpen.index = 0;
-                link.textClose.active = false;
-                link.textClose.index = 0;
-
-                link.linkOpen.active = false;
-                link.linkOpen.index = 0;
-                link.linkClose.active = false;
-                link.linkClose.index = 0;
-
-                commentURL = "";
+                let insertIndex = comment.indexOf(matchForm[0]); // replace comment with new format
+                comment = comment.replace(matchForm[0], '');
+                comment = comment.substring(0, insertIndex) + text + link + comment.substring(insertIndex);
+            } else {
+                linkFormFound = false;
             }
+        } while (linkFormFound);
 
-            // gather all characters in the url
-            if (link.active) {
-                if (comment[i] == link.linkClose.symbol) {
-                    link.linkClose.active = true;
-                    link.linkClose.index = i;
-                    link.active = false;
-                } else {
-                    commentURL += comment[i];
-                }
-            }
-
-            // if the next character after ] is (, then a user is using a url format. if not, then the user was not embedding a link
-            if (link.textClose.active && !link.active) {
-                if (comment[i] == link.linkOpen.symbol) {
-                    link.linkOpen.active = true;
-                    link.linkOpen.index = i;
-                    link.active = true;
-                } else {
-                    link.textOpen.active = false;
-                    link.textOpen.index = 0;
-                    link.textClose.active = false;
-                    link.textClose.index = 0;
-                }
-            }
-
-            // find if user [encased text in square braces]
-            if (link.textOpen.active) {
-                if (comment[i] == link.textClose.symbol) {
-                    link.textClose.active = true;
-                    link.textClose.index = i;
-                }
-            }
-
-            // start testing for a formatted link
-            if (comment[i] == link.textOpen.symbol) {
-                link.textOpen.active = true;
-                link.textOpen.index = i;
-            }
-
-            // spoiler doesn't and shouldn't be removed, but a "spoiler alert: " will be attached so the user knows one is coming up
-            if (spoiler.active) {
-                let insert = "spoiler alert... ";
-
-                comment = comment.substring(0, i - 2) + insert + comment.substring(i); // reformat comment to fit new injected string and remove '>!'
-                i += insert.length; // change i to continue normally after "spoiler alert: "
-
-                // re initialize
-                spoiler.open1.active = false;
-                spoiler.open1.index = 0;
-                spoiler.open2.active = false;
-                spoiler.open2.index = 0;
-
-                spoiler.active = false;
-            }
-
-            // if ! does not proceed >, then the user is not making a spoiler
-            if (spoiler.open1.active && comment[i] != spoiler.open2.symbol) {
-                spoiler.open1.active = false;
-                spoiler.open1.index = 0;
-            }
-
-            // look for use of !
-            if (spoiler.open1.active && comment[i] == spoiler.open2.symbol) {
-                spoiler.open2.active = true;
-                spoiler.open2.index = i;
-                spoiler.active = true;
-            }
-
-            // look for use of >
-            if (comment[i] == spoiler.open1.symbol) {
-                spoiler.open1.active = true;
-                spoiler.open1.index = i;
-            }
-        }
+        // find all instances of spoilers and replace them with spoiler warning
+        comment = comment.replace(">!", "spoiler alert... ");
 
         return comment;
     }
