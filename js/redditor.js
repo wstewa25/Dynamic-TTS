@@ -126,6 +126,45 @@ class redditor {
         // find all instances of spoilers and replace them with spoiler warning
         comment = comment.replace(">!", "spoiler alert... ");
 
+        // remove bolding
+        comment = comment.replace("**", '');
+
+        // remove bold + italics
+        comment = comment.replace("***", '');
+
         return comment;
+    }
+
+    skipThread(comment, direction) {
+        let split = comment.split(":"); // isolate "user says/replies" and comment text
+        let c = {
+            author: split[0].split(" ")[0],
+            body: comment.substring(comment.indexOf(split[1]) + 1) // + 1 necessary for the space after :, sub necessary for any instances of : in comment body
+        }
+
+        if (direction == "up") {
+
+        } else {
+            for (let i = 0; i < this.thread.length; i++) {
+                if (this.findComment(c)) {
+                    this.thread.splice(i, 1);
+                    console.log(this.thread);
+                }
+            }
+        }
+    }
+
+    findComment(comment, flag) {
+        if (comment.author == flag.author && comment.body == flag.body) {
+            return true;
+        } else {
+            if (comment.replies.length > 0) {
+                comment.replies.forEach(r => {
+                    return this.findComment(r);
+                });
+            } else {
+                return false;
+            }
+        }
     }
 }

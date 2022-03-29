@@ -64,9 +64,9 @@ function main() {
             // wait just a bit for program to catch up before making readerList
             setTimeout(function() {
                 readerList = reddit.readThread();
-                for (let i = 0; i < readerList.length; i++) {
-                    console.log(readerList[i]);
-                }
+                // for (let i = 0; i < readerList.length; i++) {
+                //     console.log(readerList[i]);
+                // }
             }, 1000);
         }
     }
