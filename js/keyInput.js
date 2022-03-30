@@ -34,11 +34,11 @@ let keyDefaults = {
     // set read speed to min
     speedMin: [ "Control", "ArrowLeft" ],
     // read comments in forward or backward order
-    orderToggle: [ "Control", "Comma" ], // js has "AltLeft" and "AltRight", both should be viable
+    orderToggle: [ "Control", "Comma" ],
     // increment volume by 1 unit
-    volumeUp: [ "Comma" ],
+    volumeUp: [ "Period" ],
     // decrement volume by 1 unit
-    volumeDown: [ "Period" ],
+    volumeDown: [ "Comma" ],
 };
 
 let keybinds = keyDefaults; // second dictionary should be used for active keybinds that can be changed
@@ -67,10 +67,10 @@ function keyAction(keybind) {
             skipThread("up");
             break;
         case "speedUp":
-            editReadSpeed(1);
+            editReadSpeed(.25);
             break;
         case "slowDown":
-            editReadSpeed(-1);
+            editReadSpeed(-.25);
             break;
         case "speedMax":
             editReadSpeed("max");
@@ -82,10 +82,10 @@ function keyAction(keybind) {
             toggleOrder();
             break;
         case "volumeUp":
-            editVolume(1);
+            editVolume(.05);
             break;
         case "volumeDown":
-            editVolume(-1);
+            editVolume(-.05);
             break;
         default:
             console.log(keybind);

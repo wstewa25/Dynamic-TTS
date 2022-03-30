@@ -142,29 +142,46 @@ class redditor {
             body: comment.substring(comment.indexOf(split[1]) + 1) // + 1 necessary for the space after :, sub necessary for any instances of : in comment body
         }
 
-        if (direction == "up") {
-
-        } else {
+        if (direction == "up") { // previous thread
             for (let i = 0; i < this.thread.length; i++) {
-                if (this.findComment(c)) {
-                    this.thread.splice(i, 1);
-                    console.log(this.thread);
+                // search comment + all replies of each parent comment for the one the TTS is currently on
+                if (this.findComment(this.thread[i], c)) {
+                    if (i > 0) { // if i == 0 then user is at the first thread
+                        return this.thread[i - 1];
+                    } else
+                        return null;
                 }
             }
+
+            // no result found
+            return null;
+        } else { // next thread
+            for (let i = 0; i < this.thread.length; i++) {
+                if (this.findComment(this.thread[i], c)) {
+                    if (i < this.thread.length - 1) { // if i == last index then user is at the last thread
+                        return this.thread[i + 1];
+                    } else
+                        return null;
+                }
+            }
+
+            return null;
         }
     }
 
     findComment(comment, flag) {
-        if (comment.author == flag.author && comment.body == flag.body) {
+        // console.log(comment, flag);
+        // console.log(comment.author == flag.author && comment.body == flag.body);
+        if (comment.author == flag.author && comment.body == flag.body) { // comment was found in a given thread
             return true;
-        } else {
-            if (comment.replies.length > 0) {
-                comment.replies.forEach(r => {
-                    return this.findComment(r);
-                });
-            } else {
-                return false;
+        }
+
+        for (let i = 0; i < comment.replies.length; i++) { // test each reply recursively to find the comment if it exists
+            if (this.findComment(comment.replies[i], flag)) {
+                return true;
             }
         }
+
+        return false; // comment not found in thread
     }
 }
