@@ -1,6 +1,6 @@
 DEPENDENCIES:
 * snoowrap => js/snoowrap-v1.js
-* axios => js/node_modules/axios/dist/axios.min.js
+* axios => node_modules/axios/dist/axios.min.js
 
 everything runs only on the popup tab right now, eventually it'll be in the background
 
