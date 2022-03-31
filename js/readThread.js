@@ -21,11 +21,13 @@ let readSpeed = {
 
 // pause or play
 function togglePlay() {
-    // pause first item in queue if it's playing
-    if (!audioQueue[0][0].paused) {
-        audioQueue[0][0].pause();
-    } else {
-        audioQueue[0][0].play();
+    if (audioQueue.length > 0) {
+        // pause first item in queue if it's playing
+        if (!audioQueue[0][0].paused) {
+            audioQueue[0][0].pause();
+        } else {
+            audioQueue[0][0].play();
+        }
     }
 }
 
@@ -49,7 +51,10 @@ function skipComment(direction) {
 // go to the next comment thread (the next "<author> says: " comment)
 function skipThread(direction) {
     // if a valid next thread comment is found, the comment for that thread is returned
-    let result = reddit.skipThread(audioQueue[0][1], direction);
+    let result = null;
+    if (audioQueue.length > 0)
+        result = reddit.skipThread(audioQueue[0][1], direction);
+
     if (result != null) {
         stopAudio(audioQueue[0][0]);
         let comment = result.author + " says: " + result.body; // convert comment to reader string
@@ -87,83 +92,87 @@ function find(array, flag) {
 
 // raise/lower volume or set to max or min
 function editVolume(amount) {
-    if (amount == "max") {
-        audioQueue[0][0].volume = volumeMax;
-    } else if (amount == "min") {
-        audioQueue[0][0].volume = volumeMin;
-    } else {
-        if (audioQueue[0][0].volume + amount > volumeMax) { // can't set volume higher than max
+    if (audioQueue.length > 0) {
+        if (amount == "max") {
             audioQueue[0][0].volume = volumeMax;
-        } else if (audioQueue[0][0].volume + amount < volumeMin) { // can't set volume lower than min
+        } else if (amount == "min") {
             audioQueue[0][0].volume = volumeMin;
         } else {
-            audioQueue[0][0].volume += amount; // if no conflicts then add amount normally
+            if (audioQueue[0][0].volume + amount > volumeMax) { // can't set volume higher than max
+                audioQueue[0][0].volume = volumeMax;
+            } else if (audioQueue[0][0].volume + amount < volumeMin) { // can't set volume lower than min
+                audioQueue[0][0].volume = volumeMin;
+            } else {
+                audioQueue[0][0].volume += amount; // if no conflicts then add amount normally
+            }
         }
     }
 }
 
 // reload audio with new TTS read speed. this restarts from currently reading comment
 function editReadSpeed(amount) {
-    // set the new reading speed for each comment
-    let newSpeed = 0;
-    if (amount == "max")
-        newSpeed = readSpeed.max;
-    else if (amount == "min")
-        newSpeed = readSpeed.min;
-    else {
-        if (readSpeed.current + amount > readSpeed.max) // don't let read speed go above max
+    if (audioQueue.length > 0) {
+        // set the new reading speed for each comment
+        let newSpeed = 0;
+        if (amount == "max")
             newSpeed = readSpeed.max;
-        else if (readSpeed.current + amount < readSpeed.min) // or below min
+        else if (amount == "min")
             newSpeed = readSpeed.min;
-        else
-            newSpeed = readSpeed.current + amount;
-    }
+        else {
+            if (readSpeed.current + amount > readSpeed.max) // don't let read speed go above max
+                newSpeed = readSpeed.max;
+            else if (readSpeed.current + amount < readSpeed.min) // or below min
+                newSpeed = readSpeed.min;
+            else
+                newSpeed = readSpeed.current + amount;
+        }
 
-    stopAudio(audioQueue[0][0]); // stop playing to indicate new audio is loading
+        stopAudio(audioQueue[0][0]); // stop playing to indicate new audio is loading
 
-    let tempQueue = [];
-    for (let i = 0; i < audioQueue.length; i++) { // queue needs to be moved to temporary arrays and filled with blank strings to be able to test if TTS has finished processing
-        tempQueue.push(audioQueue[i]);
-        audioQueue[i] = ".";
-    }
+        let tempQueue = [];
+        for (let i = 0; i < audioQueue.length; i++) { // queue needs to be moved to temporary arrays and filled with blank strings to be able to test if TTS has finished processing
+            tempQueue.push(audioQueue[i]);
+            audioQueue[i] = ".";
+        }
 
-    let tempStack = [];
-    for (let i = 0; i < tempStack.length; i++) { // do the same for stack
-        tempStack.push(playedStack[i]);
-        playedStack[i] = ".";
-    }
+        let tempStack = [];
+        for (let i = 0; i < tempStack.length; i++) { // do the same for stack
+            tempStack.push(playedStack[i]);
+            playedStack[i] = ".";
+        }
 
-    // process new audios
-    for (let i = 0; i < tempQueue.length; i++) {
-        callTTS(tempQueue[i][1], i, newSpeed, "queue");
-    }
+        // process new audios
+        for (let i = 0; i < tempQueue.length; i++) {
+            callTTS(tempQueue[i][1], i, newSpeed, "queue");
+        }
 
-    for (let i = 0; i < tempStack.length; i++) {
-        callTTS(tempStack[i][1], i, newSpeed, "stack");
-    }
+        for (let i = 0; i < tempStack.length; i++) {
+            callTTS(tempStack[i][1], i, newSpeed, "stack");
+        }
 
-    // because callTTS is asynchronous, i need to test every 100ms whether all of the audios have finished processing
-    let tester = setInterval(() => {
-        let equal = true;
-        for (let i = 0; i < tempQueue.length; i++) { // loop through each spot in tempQueue to see if audioQueue has each comment's audio ready
-            if (audioQueue[i][1] != tempQueue[i][1]) {
-                equal = false;
-                break;
+        // because callTTS is asynchronous, i need to test every 100ms whether all of the audios have finished processing
+        let tester = setInterval(() => {
+            let equal = true;
+            for (let i = 0; i < tempQueue.length; i++) { // loop through each spot in tempQueue to see if audioQueue has each comment's audio ready
+                if (audioQueue[i][1] != tempQueue[i][1]) {
+                    equal = false;
+                    break;
+                }
             }
-        }
 
-        for (let i = 0; i < tempStack.length; i++) { // then loop through each spot in tempStack to see if playedStack has finished loading
-            if (playedStack[i][1] != tempStack[i][1]) {
-                equal = false;
-                break;
+            for (let i = 0; i < tempStack.length; i++) { // then loop through each spot in tempStack to see if playedStack has finished loading
+                if (playedStack[i][1] != tempStack[i][1]) {
+                    equal = false;
+                    break;
+                }
             }
-        }
 
-        if (equal) {
-            clearInterval(tester);
-            playAudio(audioQueue[0]); // only play audio once audio has finished loading
-        }
-    }, 100);
+            if (equal) {
+                clearInterval(tester);
+                playAudio(audioQueue[0]); // only play audio once audio has finished loading
+            }
+        }, 100);
+    }
 }
 
 // reverse reading order of comments
@@ -183,7 +192,7 @@ function toggleOrder() {
         playedStack.unshift(temp.shift());
     }
 
-    console.log(audioQueue, playedStack);
+    // console.log(audioQueue, playedStack);
 }
 
 document.addEventListener('DOMContentLoaded', function(e) {
