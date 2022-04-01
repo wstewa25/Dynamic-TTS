@@ -34,7 +34,7 @@ let keyDefaults = {
     // set read speed to min
     speedMin: [ "Control", "ArrowLeft" ],
     // read comments in forward or backward order
-    orderToggle: [ "Control", "Comma" ],
+    toggleOrder: [ "Control", "Comma" ],
     // increment volume by 1 unit
     volumeUp: [ "Period" ],
     // decrement volume by 1 unit
@@ -67,10 +67,10 @@ function keyAction(keybind) {
             skipThread("up");
             break;
         case "speedUp":
-            editReadSpeed(.25);
+            editReadSpeed(.5);
             break;
         case "slowDown":
-            editReadSpeed(-.25);
+            editReadSpeed(-.5);
             break;
         case "speedMax":
             editReadSpeed("max");
