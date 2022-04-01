@@ -1,8 +1,8 @@
+download current stable version here => https://drive.google.com/file/d/1X1WPpFSUin_Ipxx-uD1HvA_Sb2bIjRi7/view?usp=sharing
+
 DEPENDENCIES:
 * snoowrap => js/snoowrap-v1.js
 * axios => node_modules/axios/dist/axios.min.js
-
-drive test: https://drive.google.com/file/d/1X1WPpFSUin_Ipxx-uD1HvA_Sb2bIjRi7/view?usp=sharing
 
 everything runs only on the popup tab right now, eventually it'll be in the background
 
