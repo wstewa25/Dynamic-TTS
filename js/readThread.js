@@ -1,4 +1,5 @@
 let voiceList = []; // list of api voices to choose from
+let voicePairs = {}; // store voices attached to each user
 
 const getVoicesUrl = 'https://texttospeech.googleapis.com/v1/voices?languageCode=en&key=AIzaSyB8iMziuh0HrpQC26c6u3nbFSgP8L0wyro';
 const apiPostUrl = 'https://texttospeech.googleapis.com/v1/text:synthesize?key=AIzaSyB8iMziuh0HrpQC26c6u3nbFSgP8L0wyro';
@@ -277,12 +278,27 @@ function stopAudio(audio) {
     audio.removeEventListener('ended', audioEnds); // if the event listener isn't removed then another listener will be added to it later if it plays again
 }
 
+function assignVoice(comment) {
+    let author = comment.split(" ")[0]; // comment string starts with author and will have first space right after, so no need to worry about any other spaces in the string
+
+    for (let user in voicePairs) { // if a user has a voice already, then just return its index in voiceList
+        if (user == author) {
+            return voicePairs[user];
+        }
+    }
+
+    // since user hasn't appeared in the thread yet, assign them a voice
+    voicePairs[author] = Math.floor(Math.random() * voiceList.length);
+    console.log(voicePairs);
+    return voicePairs[author];
+}
+
 async function callTTS(comment, index, speed = readSpeed.default, audioList = "queue"){
     // console.log("comment to send off:\n" + comment.toString());
     readSpeed.current = speed; // set new global read speed
 
     //** pick random voice
-    var randomIndex = Math.floor(Math.random() * voiceList.length);
+    let randomIndex = assignVoice(comment);
     // console.log('rando index: '+ randomIndex);
     languageCode = JSON.stringify(voiceList[randomIndex].languageCodes);
     voiceName = voiceList[randomIndex].name;
