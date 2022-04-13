@@ -86,7 +86,9 @@ window.onload = function() {
     play_listener.addEventListener("click", function(){
         chrome.windows.create({
             url: chrome.runtime.getURL("miniplayer.html"),
-            type: "popup"
+            type: "popup",
+            width: 700,
+            height: 350
           });
     });
 };
