@@ -120,3 +120,10 @@
 
 // window.addEventListener('keydown', getKey);
 // window.addEventListener('keyup', getKey);
+
+
+
+
+
+
+//"js": ["miniscreen.js"]
