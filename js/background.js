@@ -125,5 +125,8 @@
 
 
 
-
-//"js": ["miniscreen.js"]
+// "content_scripts": [
+//     {
+//       "matches": ["https://developer.mozilla.org/*"],
+//       "js": ["miniscreen.js"]
+//     }
