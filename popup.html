@@ -1,25 +1,37 @@
-
 <!doctype html>
-<html>
+<html lang="en">
     <head>
-        <script type="text/javascript" src="js_files/snoowrap-v1.js"></script>
+        <title>Dynamic TTS</title>
+
+        <link rel="stylesheet" href="css/popup.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+
+        <script type="text/javascript" src="js/snoowrap-v1.js"></script>
         <script src="node_modules/axios/dist/axios.min.js"></script>
-        <script type="text/javascript" src="js_files/popup.js"></script>
-        <script type ="text/javascript" src="js_files/speaktest.js"></script>
-        <script type ="text/javascript" src="js_files/readThread.js"></script>
+        <script type="text/javascript" src="js/tts.js"></script>
+        <script type="text/javascript" src="js/redditor.js"></script>
+        <script type="text/javascript" src="js/popup.js"></script>
+        <script type="text/javascript" src="js/readThread.js"></script>
+        <script type="text/javascript" src="js/keyInput.js"></script>
     </head>
+
     <body>
         <div id="main">
-            <p id="output">test text</p>
+            <p id="tabName">tab</p>
+            <button type="button" id="play"><i class="material-icons">play_arrow</i>Play</button>
+            <button type="button" id="pause"><i class="material-icons">pause</i>Pause</button>
+            <button type="button" id="settings"><i class="material-icons">settings</i>Settings</button>
+            <button type="button" id="miniscreen"><i class="material-icons">picture_in_picture_alt</i>Mini Screen</button>
+
             <form>
-                <label for="test_read">Text to read:</label>
-                <input type="text" id="test_read" name="test_read"><br><br>
-                <input type="button" value = "Read" id = "submit_text">
                 <div id = "readThreadTestDiv">
-                    <input type = "button" value = "read thread test" id = "readThreadTestButton">
+                    <input type="button" value="read thread test" id="readThreadTestButton" name="read_thread_button">
                 </div>
             </form>
         </div>
     </body>
 </html>
-
