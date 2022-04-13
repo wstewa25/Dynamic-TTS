@@ -1,19 +1,18 @@
 
-{
-    "manifest_version": 3,
-  
-    "name": "test",
-    "description": "do i work",
+  {
+    "name": "Extension Demo",
     "version": "1.0",
-  
+    "description": "A text reader that reads through comment threads with unique voices in a conversational style",
+    "icons": {"48": "icon.png"},
+    "permissions": ["activeTab"],
+    "content_scripts": [
+      {
+        "matches": ["https://developer.mozilla.org/*"],
+        "js": ["miniscreen.js"]
+      }
+    ],
     "action": {
-     "default_icon": "icon.png",
-     "default_popup": "popup.html"
+      "default_popup": "popup.html"
     },
-
-    "permissions": [
-     "tabs",
-     "webRequest",
-     "tts"
-    ]
+    "manifest_version": 3
   }

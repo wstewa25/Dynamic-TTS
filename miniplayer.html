@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="miniscreenStyle.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Miniscreen Test</title>
+</head>
+
+<body id="main">
+    <div class="browse-controls">
+        <button type="button" id="text-box"><i class="material-icons" style="font-size: 30px">text_fields</i></button>
+        <button type="button" id="minimize"><i class="material-icons" style="font-size: 30px">remove</i></button>
+        <button type="button" id="close"><i class="material-icons" style="font-size: 30px">close</i></button>
+    </div>
+
+    <div class="main-controls">
+        <button type="button" id="back"><i class="material-icons" style="font-size: 60px">fast_rewind</i></button>
+        <button type="button" id="play"><i class="material-icons" style="font-size: 60px">play_arrow</i></button>
+        <button type="button" id="forward"><i class="material-icons" style="font-size: 60px">fast_forward</i></button>
+    </div>
+
+    <div class="volText">
+        <h3>Voice Volume</h3>
+        <h3 id="volValue">50</h3> <!-- doesn't work yet -->
+    </div>
+
+    <div class="volSlider">
+        <input type="range" min="0" max="100" value="50" class="slider" id="volume">
+    </div>
+
+    <div class="speedText">
+        <h3>Playback Speed</h3>
+        <h3 id="speedValue">50</h3> <!-- doesn't work yet -->
+    </div>
+
+    <div class="speedSlider">
+        <input type="range" min="0" max="100" value="50" class="slider" id="speed">
+    </div>
+</body>
+</html>
