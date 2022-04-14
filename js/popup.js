@@ -82,7 +82,7 @@ async function getCurrentTab() {
 window.onload = function() {
     init();
 
-    let play_listener = document.getElementById("play"); // button click to tell tts to start
+    let play_listener = document.getElementById("play"); // play button makes miniplayer pop up
     play_listener.addEventListener("click", function(){
         chrome.windows.create({
             url: chrome.runtime.getURL("miniplayer.html"),
