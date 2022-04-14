@@ -50,9 +50,9 @@ function trimURL(url) {
 }
 
 function main() {
-    activeTab = document.getElementById("tabName").innerHTML;
+    activeTab = document.getElementById("currentTab").innerHTML;
     tabTrimmed = trimURL(activeTab);
-    document.getElementById("tabName").innerHTML = tabTrimmed;
+    document.getElementById("currentTab").innerHTML = tabTrimmed;
 
     if (activeTab.includes("reddit.com/")) { // only works if you're viewing a submission
         if (activeTab.includes("/comments/")) {
@@ -75,7 +75,7 @@ function main() {
 async function getCurrentTab() {
     let queryOptions = { active: true, currentWindow: true };
     let [tab] = await chrome.tabs.query(queryOptions);
-    document.getElementById("tabName").innerHTML = tab.url;
+    document.getElementById("currentTab").innerHTML = tab.url;
     return tab;
   }
 

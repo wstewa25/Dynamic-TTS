@@ -63,45 +63,5 @@ window.onload = function() {
             }
         }, 100);
     });
-
-
-    function main() {
-        activeTab = document.getElementById("currentTab").innerHTML;
-        tabTrimmed = trimURL(activeTab);
-        document.getElementById("currentTab").innerHTML = tabTrimmed;
-    
-        if (activeTab.includes("reddit.com/")) { // only works if you're viewing a submission
-            if (activeTab.includes("/comments/")) {
-                let submissionID = activeTab.split("/");
-                submissionID = submissionID[submissionID.indexOf("comments") + 1]; // post id comes after /comments/
-    
-                reddit.getComments(submissionID);
-    
-                // wait just a bit for program to catch up before making readerList
-                setTimeout(function() {
-                    readerList = reddit.readThread();
-                    // for (let i = 0; i < readerList.length; i++) {
-                    //     console.log(readerList[i]);
-                    // }
-                }, 1000);
-            }
-        }
-    }
-
-    async function getCurrentTab() {
-        let queryOptions = { active: true, currentWindow: true };
-        let [tab] = await chrome.tabs.query(queryOptions);
-        document.getElementById("currentTab").value = tab.url;
-        return tab;
-      }
-
-      function init() {
-        // everything needs to execute after the active tab has been found
-        getCurrentTab().then(result => {
-            main();
-        });
-    }
-
-    init();
 }
 
