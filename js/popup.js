@@ -82,14 +82,15 @@ async function getCurrentTab() {
 window.onload = function() {
     init();
 
+
+
+    function Redirect() {
+        
+     }
+
     let play_listener = document.getElementById("play"); // play button makes miniplayer pop up
     play_listener.addEventListener("click", function(){
-        chrome.windows.create({
-            url: chrome.runtime.getURL("miniplayer.html"),
-            type: "panel",
-            width: 700,
-            height: 350
-          });
+        window.location.assign("/miniplayer.html");
     });
 };
 

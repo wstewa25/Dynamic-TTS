@@ -224,6 +224,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
 });
 
 function playAudio(audio) {
+    console.log(audio[0]);
     if (!audio[0] || !(audio[0] instanceof Audio)) return false; // don't attempt to play audio if it's invalid
 
     audio[0].play();

@@ -4,6 +4,7 @@ window.onload = function() {
     let volumeMinus = document.getElementById("volumeMinus");
     let speedPlus = document.getElementById("speedPlus");
     let speedMinus = document.getElementById("speedMinus");
+    let close = document.getElementById("close");
 
     volumePlus.addEventListener("click", function(){
         let volume = document.getElementById("volValue");
@@ -30,6 +31,11 @@ window.onload = function() {
         editReadSpeed(-0.25);
         speed.InnerHTML = readSpeed.current;
     });
+
+    close.addEventListener('click', function(){
+        window.location.assign("/popup.html");
+    });
+
 
 
 
