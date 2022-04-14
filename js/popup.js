@@ -74,10 +74,8 @@ function main() {
 async function getCurrentTab() {
     let queryOptions = { active: true, currentWindow: true };
     let [tab] = await chrome.tabs.query(queryOptions);
-    let currTab = document.createElement("P");
-    currTab.innerHTML = tab.url;
-    currTab.setAttribute('id', 'currentTab');
-    currTab.setAttribute('type', 'hidden');
+    document.getElementById("currentTab").innerHTML = tab.url;
+    document.getElementById("currentTab").style.display = "none";
     return tab;
   }
 

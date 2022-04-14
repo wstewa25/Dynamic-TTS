@@ -1,5 +1,3 @@
-let readerList = [];
-
 window.onload = function() {
 
     let volumePlus = document.getElementById("volumePlus");
