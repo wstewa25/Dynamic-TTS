@@ -18,7 +18,11 @@ window.onload = function() {
 
     speedPlus.addEventListener("click", function(){
         let speed = document.getElementById("speedValue");
+        if (!processingReadSpeedRequest){
+        console.log("edit read speed");
         editReadSpeed(0.25);
+        console.log("changed read speed to " + readSpeed.current);
+        }
         speed.InnerHTML = readSpeed.current;
     });
     speedMinus.addEventListener("click", function(){
