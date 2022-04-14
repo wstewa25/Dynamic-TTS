@@ -82,12 +82,6 @@ async function getCurrentTab() {
 window.onload = function() {
     init();
 
-
-
-    function Redirect() {
-        
-     }
-
     let play_listener = document.getElementById("play"); // play button makes miniplayer pop up
     play_listener.addEventListener("click", function(){
         window.location.assign("/miniplayer.html");
