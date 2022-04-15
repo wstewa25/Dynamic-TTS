@@ -32,3 +32,8 @@ body {
     text-align: center;
     font-size: 14px;
 }
+
+.inputStyle {
+  background-color:#221f1f;
+  color: white;
+}
