@@ -7,8 +7,8 @@ const apiPostUrl = 'https://texttospeech.googleapis.com/v1/text:synthesize?key=A
 let audioQueue = []; // holds audio and text in the order to read each comment
 let playedStack = []; // holds audio and text for comments that have been read
 
-let volumeMax = 1.0; // 1.0 == 100% volume
-let volumeMin = 0.0; // == 0%
+let volumeMax = 1.00; // 1.0 == 100% volume
+let volumeMin = 0.00; // == 0%
 
 let readSpeed = {
     default: 1.0,
