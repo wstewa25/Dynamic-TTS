@@ -106,19 +106,21 @@ window.onload = function() {
     });
 
     speedPlus.addEventListener("click", function(){
-        let speed = document.getElementById("speedValue");
-        if (parseInt(speed) != 4){
+        let speed = document.getElementById("speedValue").innerHTML;
+        if (parseFloat(speed) != 4){
             editReadSpeed(0.25);
-            let newSpeed = parseFloat(speed) + 0.25
-            speed.InnerHTML = newSpeed
+            let newSpeed = parseFloat(speed)
+            newSpeed = newSpeed + 0.25;
+            document.getElementById("speedValue").innerHTML = newSpeed;
         }
     });
     speedMinus.addEventListener("click", function(){
-        let speed = document.getElementById("speedValue");
-        if (parseInt(speed) != 0.25){
+        let speed = document.getElementById("speedValue").innerHTML;
+        if (parseFloat(speed) != 0.25){
             editReadSpeed(-0.25);
-            let newSpeed = parseFloat(speed) - 0.25
-            speed.InnerHTML = newSpeed
+            let newSpeed = parseFloat(speed)
+            newSpeed = newSpeed - 0.25;
+            document.getElementById("speedValue").innerHTML = newSpeed;
         }
     });
 };
