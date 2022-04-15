@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function() { //not working for now, because of data problems.
 
     let volumePlus = document.getElementById("volumePlus");
     let volumeMinus = document.getElementById("volumeMinus");
@@ -34,7 +34,7 @@ window.onload = function() {
 
     close.addEventListener('click', function(){
         window.location.assign("/popup.html");
-    });
+    }); //go back to popup when X clicked
 
 
 
