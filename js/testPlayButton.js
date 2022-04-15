@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function(e) {
-    let butt_listener = document.getElementById("readThreadTestButton"); // button click to tell tts to start
+    let butt_listener = document.getElementById("play"); // button click to tell tts to start
     butt_listener.addEventListener("click", function(){
         // console.log(readerList);
         audioQueue = []; // re-initialize the queue each time a request is made
