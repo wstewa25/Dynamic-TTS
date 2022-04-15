@@ -120,3 +120,13 @@
 
 // window.addEventListener('keydown', getKey);
 // window.addEventListener('keyup', getKey);
+
+
+
+
+
+// "content_scripts": [
+//     {
+//       "matches": ["https://developer.mozilla.org/*"],
+//       "js": ["miniscreen.js"]
+//     }

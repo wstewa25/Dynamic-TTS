@@ -67,10 +67,10 @@ function keyAction(keybind) {
             skipThread("up");
             break;
         case "speedUp":
-            editReadSpeed(.5);
+            editReadSpeed(.25);
             break;
         case "slowDown":
-            editReadSpeed(-.5);
+            editReadSpeed(-.25);
             break;
         case "speedMax":
             editReadSpeed("max");

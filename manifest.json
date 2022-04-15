@@ -1,19 +1,18 @@
 
-{
-    "manifest_version": 3,
-  
-    "name": "test",
-    "description": "do i work",
+  {
+    "name": "Extension Demo",
     "version": "1.0",
-  
-    "action": {
-     "default_icon": "icon.png",
-     "default_popup": "popup.html"
-    },
-
+    "description": "A text reader that reads through comment threads with unique voices in a conversational style",
+    "icons": {"48": "icon.png"},
     "permissions": [
-     "tabs",
-     "webRequest",
-     "tts"
-    ]
+      "activeTab",
+      "tabs",
+      "webRequest",
+      "tts"
+     ],
+    "action": {
+      "default_icon": "icon.png",
+      "default_popup": "popup.html"
+    },
+    "manifest_version": 3
   }

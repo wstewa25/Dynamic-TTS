@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/miniplayerStyle.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <script src="node_modules/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="js/snoowrap-v1.js"></script>
+    <script type="text/javascript" src="js/tts.js"></script>
+    <script type="text/javascript" src="js/redditor.js"></script>
+    <script type="text/javascript" src="js/popup.js"></script>
+    <script type="text/javascript" src="js/readThread.js"></script>
+    <script type="text/javascript" src="js/keyInput.js"></script>
+    <script type="text/javascript" src="js/miniplayer.js"></script>
+    
+
+    <title>Miniscreen Test</title>
+</head>
+
+<body id="main">
+    <p id="currentTab" type="hidden">tab</p>
+    <input type = "hidden" id = "currentTab">
+    <div class="browse-controls">
+        <button type="button" id="text-box"><i class="material-icons" style="font-size: 30px">text_fields</i></button>
+        <button type="button" id="minimize"><i class="material-icons" style="font-size: 30px">remove</i></button>
+        <button type="button" id="close"><i class="material-icons" style="font-size: 30px">close</i></button>
+    </div>
+
+    <div class="main-controls">
+        <button type="button" id="back"><i class="material-icons" style="font-size: 60px">fast_rewind</i></button>
+        <button type="button" id="play"><i class="material-icons" style="font-size: 60px">play_arrow</i></button>
+        <button type="button" id="forward"><i class="material-icons" style="font-size: 60px">fast_forward</i></button>
+    </div>
+
+    <div class="volText">
+        <h3>Voice Volume</h3>
+        <h3 id="volValue">50</h3> <!-- doesn't work yet -->
+    </div>
+
+    <div class="volChange">
+        <input type="button" min="0" max="100" value="+" id ="volumePlus"></input>
+        <input type="button" min="0" max="100" value="-" id ="volumeMinus"></input>
+    </div>
+
+    <div class="speedText">
+        <h3>Playback Speed</h3>
+        <h3 id="speedValue">1.00</h3> <!-- doesn't work yet -->
+    </div>
+
+    <div class="speedChange">
+        <input type="button" min="0" max="4" value="+" id ="speedPlus"></input>
+        <input type="button" min="0" max="4" value="-" id ="speedMinus"></input>
+    </div>
+</body>
+</html>

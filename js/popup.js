@@ -50,9 +50,8 @@ function trimURL(url) {
 }
 
 function main() {
-    activeTab = document.getElementById("tabName").innerHTML;
+    activeTab = document.getElementById("currentTab").innerHTML;
     tabTrimmed = trimURL(activeTab);
-    document.getElementById("tabName").innerHTML = tabTrimmed;
 
     if (activeTab.includes("reddit.com/")) { // only works if you're viewing a submission
         if (activeTab.includes("/comments/")) {
@@ -64,9 +63,9 @@ function main() {
             // wait just a bit for program to catch up before making readerList
             setTimeout(function() {
                 readerList = reddit.readThread();
-                // for (let i = 0; i < readerList.length; i++) {
-                //     console.log(readerList[i]);
-                // }
+                for (let i = 0; i < readerList.length; i++) {
+                    console.log(readerList[i]);
+                }
             }, 1000);
         }
     }
@@ -75,10 +74,63 @@ function main() {
 async function getCurrentTab() {
     let queryOptions = { active: true, currentWindow: true };
     let [tab] = await chrome.tabs.query(queryOptions);
-    document.getElementById("tabName").innerHTML = tab.url;
+    document.getElementById("currentTab").innerHTML = tab.url;
+    document.getElementById("currentTab").style.display = "none";
     return tab;
   }
 
 window.onload = function() {
     init();
+//function to switch to miniplayer when play button clicked, not implemented for now.
+    // let play_listener = document.getElementById("play"); // play button makes miniplayer pop up
+    // play_listener.addEventListener("click", function(){
+    //     window.location.assign("/miniplayer.html");
+    //     init();
+    // }); 
+
+    let volumePlus = document.getElementById("volumePlus");
+    let volumeMinus = document.getElementById("volumeMinus");
+    let speedPlus = document.getElementById("speedPlus");
+    let speedMinus = document.getElementById("speedMinus");
+    let close = document.getElementById("close");
+
+    volumePlus.addEventListener("click", function(){
+        let volume = document.getElementById("volValue").innerHTML;
+        if (parseInt(volume) != 100){
+            editVolume(0.01);
+            let newVolume = parseInt(volume);
+            newVolume = newVolume + 1;
+            document.getElementById("volValue").innerHTML = newVolume;
+        }
+    });
+    volumeMinus.addEventListener("click", function(){
+        let volume = document.getElementById("volValue").innerHTML;
+        if (parseInt(volume) != 0){
+            editVolume(-0.01);
+            let newVolume = parseInt(volume);
+            newVolume = newVolume - 1;
+            document.getElementById("volValue").innerHTML = newVolume;
+        }
+    });
+
+    speedPlus.addEventListener("click", function(){
+        let speed = document.getElementById("speedValue").innerHTML;
+        if (parseFloat(speed) != 4){
+            editReadSpeed(0.25);
+            let newSpeed = parseFloat(speed)
+            newSpeed = newSpeed + 0.25;
+            document.getElementById("speedValue").innerHTML = newSpeed;
+        }
+    });
+    speedMinus.addEventListener("click", function(){
+        let speed = document.getElementById("speedValue").innerHTML;
+        if (parseFloat(speed) != 0.25){
+            editReadSpeed(-0.25);
+            let newSpeed = parseFloat(speed)
+            newSpeed = newSpeed - 0.25;
+            document.getElementById("speedValue").innerHTML = newSpeed;
+        }
+    });
 };
+
+
