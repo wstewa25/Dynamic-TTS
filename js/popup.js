@@ -107,17 +107,19 @@ window.onload = function() {
 
     speedPlus.addEventListener("click", function(){
         let speed = document.getElementById("speedValue");
-        if (!processingReadSpeedRequest){
-        console.log("edit read speed");
-        editReadSpeed(0.25);
-        console.log("changed read speed to " + readSpeed.current);
+        if (parseInt(speed) != 4){
+            editReadSpeed(0.25);
+            let newSpeed = parseFloat(speed) + 0.25
+            speed.InnerHTML = newSpeed
         }
-        speed.InnerHTML = readSpeed.current;
     });
     speedMinus.addEventListener("click", function(){
         let speed = document.getElementById("speedValue");
-        editReadSpeed(-0.25);
-        speed.InnerHTML = readSpeed.current;
+        if (parseInt(speed) != 0.25){
+            editReadSpeed(-0.25);
+            let newSpeed = parseFloat(speed) - 0.25
+            speed.InnerHTML = newSpeed
+        }
     });
 };
 
