@@ -93,6 +93,7 @@ window.onload = function() {
     let speedPlus = document.getElementById("speedPlus");
     let speedMinus = document.getElementById("speedMinus");
     let close = document.getElementById("close");
+    let pause = document.getElementById("pause");
 
     volumePlus.addEventListener("click", function(){
         let volume = document.getElementById("volValue").innerHTML;
@@ -130,6 +131,13 @@ window.onload = function() {
             newSpeed = newSpeed - 0.25;
             document.getElementById("speedValue").innerHTML = newSpeed;
         }
+    });
+
+    pause.addEventListener('click', function(){
+        if (pause.innerHTML == '<i class="material-icons">pause</i>Pause')
+            pause.innerHTML = '<i class="material-icons">play_arrow</i>Play';
+        else
+            pause.innerHTML = '<i class="material-icons">pause</i>Pause';
     });
 };
 

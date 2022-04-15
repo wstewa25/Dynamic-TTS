@@ -1,6 +1,7 @@
 body {
     background-color: #221f1f;
     margin: 0px;
+    color: white;
   }
   
   button {
@@ -31,9 +32,4 @@ body {
     color: #ffffff;
     text-align: center;
     font-size: 14px;
-}
-
-body {
-  background-color:#221f1f;
-  color: white;
 }
