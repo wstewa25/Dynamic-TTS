@@ -94,6 +94,7 @@ window.onload = function() {
     let speedMinus = document.getElementById("speedMinus");
     let close = document.getElementById("close");
     let pause = document.getElementById("pause");
+    let skip_forward = document.getElementById("forward");
 
     volumePlus.addEventListener("click", function(){
         let volume = document.getElementById("volValue").innerHTML;
@@ -139,6 +140,14 @@ window.onload = function() {
         else
             pause.innerHTML = '<i class="material-icons">pause</i>Pause';
     });
+
+    pause.addEventListener("click", function (){
+        togglePlay();
+     });
+ 
+     skip_forward.addEventListener("click", function(){
+         skipComment();
+     })
 };
 
 
