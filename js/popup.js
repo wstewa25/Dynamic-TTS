@@ -95,6 +95,7 @@ window.onload = function() {
     let close = document.getElementById("close");
     let pause = document.getElementById("pause");
     let skip_forward = document.getElementById("forward");
+    let skip_thread = document.getElementById('skip_thread');
 
     volumePlus.addEventListener("click", function(){
         let volume = document.getElementById("volValue").innerHTML;
@@ -147,7 +148,11 @@ window.onload = function() {
  
      skip_forward.addEventListener("click", function(){
          skipComment();
-     })
+     });
+
+     skip_thread.addEventListener("click", function(){
+        skipThread();
+    });
 };
 
 
