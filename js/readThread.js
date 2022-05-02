@@ -9,7 +9,7 @@ let playedStack = []; // holds audio and text for comments that have been read
 
 let volumeMax = 1.00; // 1.0 == 100% volume
 let volumeMin = 0.00; // == 0%
-let currentVolume = 1.00;
+let currentVolume = 1.00; //Default volume is 1.00. So we start here
 
 //parseFloat(document.getElementById("volValue"))/100;
 
@@ -230,7 +230,7 @@ function playAudio(audio) {
     console.log(audio[0]);
     if (!audio[0] || !(audio[0] instanceof Audio)) return false; // don't attempt to play audio if it's invalid
 
-    audio[0].volume = currentVolume;
+    audio[0].volume = currentVolume; //set volume to current volume specified by user
     audio[0].play();
 
     audio[0].addEventListener('ended', audioEnds); // don't play next comment audio until current audio has finished
