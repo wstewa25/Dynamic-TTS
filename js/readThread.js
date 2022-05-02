@@ -9,6 +9,9 @@ let playedStack = []; // holds audio and text for comments that have been read
 
 let volumeMax = 1.00; // 1.0 == 100% volume
 let volumeMin = 0.00; // == 0%
+let currentVolume = 1.00;
+
+//parseFloat(document.getElementById("volValue"))/100;
 
 let readSpeed = {
     default: 1.0,
@@ -96,16 +99,16 @@ function find(array, flag) {
 function editVolume(amount) {
     if (audioQueue.length > 0) {
         if (amount == "max") {
-            audioQueue[0][0].volume = volumeMax;
+            currentVolume = volumeMax;
         } else if (amount == "min") {
-            audioQueue[0][0].volume = volumeMin;
+            currentVolume = volumeMin;
         } else {
-            if (audioQueue[0][0].volume + amount > volumeMax) { // can't set volume higher than max
-                audioQueue[0][0].volume = volumeMax;
-            } else if (audioQueue[0][0].volume + amount < volumeMin) { // can't set volume lower than min
-                audioQueue[0][0].volume = volumeMin;
+            if (currentVolume + amount > volumeMax) { // can't set volume higher than max
+                acurrentVolume = volumeMax;
+            } else if (currentVolume + amount < volumeMin) { // can't set volume lower than min
+                currentVolume = volumeMin;
             } else {
-                audioQueue[0][0].volume += amount; // if no conflicts then add amount normally
+                currentVolume += amount; // if no conflicts then add amount normally
             }
         }
     }
@@ -227,6 +230,7 @@ function playAudio(audio) {
     console.log(audio[0]);
     if (!audio[0] || !(audio[0] instanceof Audio)) return false; // don't attempt to play audio if it's invalid
 
+    audio[0].volume = currentVolume;
     audio[0].play();
 
     audio[0].addEventListener('ended', audioEnds); // don't play next comment audio until current audio has finished
