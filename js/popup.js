@@ -140,9 +140,9 @@ window.onload = function() {
 
     speedPlus.addEventListener("click", function(){
         let speed = document.getElementById("speedValue").innerHTML;
-        if (parseFloat(speed) != 4){
+        if (parseFloat(speed) != 4.00){
             editReadSpeed(0.25);
-            let newSpeed = parseFloat(speed)
+            let newSpeed = parseFloat(speed);
             newSpeed = newSpeed + 0.25;
             document.getElementById("speedValue").innerHTML = newSpeed;
         }
@@ -151,26 +151,35 @@ window.onload = function() {
         let speed = document.getElementById("speedValue").innerHTML;
         if (parseFloat(speed) != 0.25){
             editReadSpeed(-0.25);
-            let newSpeed = parseFloat(speed)
+            let newSpeed = parseFloat(speed);
             newSpeed = newSpeed - 0.25;
             document.getElementById("speedValue").innerHTML = newSpeed;
         }
     });
     speedPlusPlus.addEventListener("click", function(){
         let speed = document.getElementById("speedValue").innerHTML;
-        if (parseFloat(speed) != 4){
-            editReadSpeed(1);
-            let newSpeed = parseFloat(speed)
-            newSpeed = newSpeed + 1;
+        if (parseFloat(speed) <= 3.00){
+            editReadSpeed(1.00);
+            let newSpeed = parseFloat(speed);
+            newSpeed = newSpeed + 1.00;
+            document.getElementById("speedValue").innerHTML = newSpeed;
+        } else {
+            editReadSpeed(4.00-speed);
+            let newSpeed = parseFloat(speed);
+            newSpeed = newSpeed + (4.00-speed);
             document.getElementById("speedValue").innerHTML = newSpeed;
         }
     });
     speedMinusMinus.addEventListener("click", function(){
         let speed = document.getElementById("speedValue").innerHTML;
-        if (parseFloat(speed) != 0.25){
-            editReadSpeed(-1);
-            let newSpeed = parseFloat(speed)
-            newSpeed = newSpeed - 1;
+        if (parseFloat(speed) >= 1.25){
+            editReadSpeed(-1.00);
+            let newSpeed = parseFloat(speed);
+            newSpeed = newSpeed - 1.00;
+            document.getElementById("speedValue").innerHTML = newSpeed;
+        } else {
+            editReadSpeed(-speed + 0.25);
+            let newSpeed = 0.25
             document.getElementById("speedValue").innerHTML = newSpeed;
         }
     });
