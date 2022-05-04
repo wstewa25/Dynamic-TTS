@@ -94,6 +94,8 @@ window.onload = function() {
     let volumeMinusMinus = document.getElementById("volumeMinusMinus");
     let speedPlus = document.getElementById("speedPlus");
     let speedMinus = document.getElementById("speedMinus");
+    let speedPlusPlus = document.getElementById("speedPlusPlus");
+    let speedMinusMinus = document.getElementById("speedMinusMinus");
     let close = document.getElementById("close");
     let pause = document.getElementById("pause");
     let skip_forward = document.getElementById("forward");
@@ -151,6 +153,24 @@ window.onload = function() {
             editReadSpeed(-0.25);
             let newSpeed = parseFloat(speed)
             newSpeed = newSpeed - 0.25;
+            document.getElementById("speedValue").innerHTML = newSpeed;
+        }
+    });
+    speedPlusPlus.addEventListener("click", function(){
+        let speed = document.getElementById("speedValue").innerHTML;
+        if (parseFloat(speed) != 4){
+            editReadSpeed(1);
+            let newSpeed = parseFloat(speed)
+            newSpeed = newSpeed + 1;
+            document.getElementById("speedValue").innerHTML = newSpeed;
+        }
+    });
+    speedMinusMinus.addEventListener("click", function(){
+        let speed = document.getElementById("speedValue").innerHTML;
+        if (parseFloat(speed) != 0.25){
+            editReadSpeed(-1);
+            let newSpeed = parseFloat(speed)
+            newSpeed = newSpeed - 1;
             document.getElementById("speedValue").innerHTML = newSpeed;
         }
     });
