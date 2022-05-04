@@ -11,7 +11,7 @@ let volumeMax = 1.00; // 1.0 == 100% volume
 let volumeMin = 0.00; // == 0%
 let currentVolume = 1.00; //Default volume is 1.00. So we start here
 
-//parseFloat(document.getElementById("volValue"))/100;
+//
 
 let readSpeed = {
     default: 1.0,
@@ -97,19 +97,17 @@ function find(array, flag) {
 
 // raise/lower volume or set to max or min
 function editVolume(amount) {
-    if (audioQueue.length > 0) {
-        if (amount == "max") {
-            currentVolume = volumeMax;
-        } else if (amount == "min") {
+    if (amount == "max") {
+        currentVolume = volumeMax;
+    } else if (amount == "min") {
+        currentVolume = volumeMin;
+    } else {
+        if (currentVolume + amount > volumeMax) { // can't set volume higher than max
+            acurrentVolume = volumeMax;
+        } else if (currentVolume + amount < volumeMin) { // can't set volume lower than min
             currentVolume = volumeMin;
         } else {
-            if (currentVolume + amount > volumeMax) { // can't set volume higher than max
-                acurrentVolume = volumeMax;
-            } else if (currentVolume + amount < volumeMin) { // can't set volume lower than min
-                currentVolume = volumeMin;
-            } else {
-                currentVolume += amount; // if no conflicts then add amount normally
-            }
+            currentVolume += amount; // if no conflicts then add amount normally
         }
     }
 }

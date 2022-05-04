@@ -90,6 +90,8 @@ window.onload = function() {
 
     let volumePlus = document.getElementById("volumePlus");
     let volumeMinus = document.getElementById("volumeMinus");
+    let volumePlusPlus = document.getElementById("volumePlusPlus");
+    let volumeMinusMinus = document.getElementById("volumeMinusMinus");
     let speedPlus = document.getElementById("speedPlus");
     let speedMinus = document.getElementById("speedMinus");
     let close = document.getElementById("close");
@@ -112,6 +114,24 @@ window.onload = function() {
             editVolume(-0.01);
             let newVolume = parseInt(volume);
             newVolume = newVolume - 1;
+            document.getElementById("volValue").innerHTML = newVolume;
+        }
+    });
+    volumePlusPlus.addEventListener("click", function(){
+        let volume = document.getElementById("volValue").innerHTML;
+        if (parseInt(volume) != 100){
+            editVolume(0.10);
+            let newVolume = parseInt(volume);
+            newVolume = newVolume + 10;
+            document.getElementById("volValue").innerHTML = newVolume;
+        }
+    });
+    volumeMinusMinus.addEventListener("click", function(){
+        let volume = document.getElementById("volValue").innerHTML;
+        if (parseInt(volume) != 0){
+            editVolume(-0.10);
+            let newVolume = parseInt(volume);
+            newVolume = newVolume - 10;
             document.getElementById("volValue").innerHTML = newVolume;
         }
     });
