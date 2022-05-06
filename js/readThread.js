@@ -34,6 +34,7 @@ function togglePlay() {
             audioQueue[0][0].play();
         }
     }
+    console.log("play toggled");
 }
 
 // go to next comment (down) or the previously played comment (up)
@@ -51,6 +52,7 @@ function skipComment(direction) {
             playAudio(audioQueue[0]);
         }
     }
+    console.log("skipped " + direction);
 }
 
 // go to the next comment thread (the next "<author> says: " comment)
@@ -110,6 +112,7 @@ function editVolume(amount) {
             currentVolume += amount; // if no conflicts then add amount normally
         }
     }
+    console.log("changed volume " + amount);
 }
 
 // reload audio with new TTS read speed. this restarts from currently reading comment
@@ -181,6 +184,7 @@ function editReadSpeed(amount) {
             }, 100);
         }
     }
+    console.log("changed speed " + amount);
 }
 
 // reverse reading order of comments

@@ -50,9 +50,8 @@ let keyStrokes = {};
 
 async function keybindsFromStorage() {
     for (let key in keybinds) {
-        //var  keyName = key.toString();
-        console.log("key name = " + key);
-        console.log("key value = " + keybinds[key]);
+        // console.log("key name = " + key);
+        // console.log("key value = " + keybinds[key]);
 
      await chrome.storage.sync.get([key], function (result) {
             if (result[key] != undefined) {
@@ -63,19 +62,20 @@ async function keybindsFromStorage() {
             }
         });
     }
+    console.log("keybinds masterkey = " + keybinds.masterKey);
 }
 keybindsFromStorage();
 
-// This shows that the storage is actually persisting....
-chrome.storage.sync.get(['pausePlay'], function(result){
-    console.log("val actually is " + result.pausePlay);
-});
+async function printStorage(){
+
+}
 
 // execute a keybind that's actively pressed down
 function keyAction(keybind) {
     switch (keybind) {
         case "pausePlay":
             togglePlay();
+            //console.log("play toggle");
             break;
         case "commentDown":
             skipComment("down");

@@ -30,7 +30,7 @@ function save_options() {
 
             //check to see if it stored
         chrome.storage.sync.get([setting], function(result){
-            console.log("val actually is " + result[setting]);
+            console.log("setting.js setting is " + result[setting]);
         });
 
         var status = document.getElementById('status');
