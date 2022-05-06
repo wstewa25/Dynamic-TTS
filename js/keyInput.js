@@ -84,12 +84,35 @@ function keyAction(keybind) {
         case "threadUp":
             skipThread("up");
             break;
-        case "speedUp":
-            editReadSpeed(.25);
+        case "speedUp": {
+            let speed = document.getElementById("speedValue").innerHTML;
+            if (parseFloat(speed) <= 3.50){
+                editReadSpeed(0.50);
+                let newSpeed = parseFloat(speed);
+                newSpeed = newSpeed + 0.50;
+                document.getElementById("speedValue").innerHTML = newSpeed;
+            } else {
+                editReadSpeed(4.00-speed);
+                let newSpeed = parseFloat(speed);
+                newSpeed = newSpeed + (4.00-speed);
+                document.getElementById("speedValue").innerHTML = newSpeed;
+            }
             break;
-        case "slowDown":
-            editReadSpeed(-.25);
+        }
+        case "slowDown":{
+            let speed = document.getElementById("speedValue").innerHTML;
+            if (parseFloat(speed) >= 0.75){
+                editReadSpeed(-0.50);
+                let newSpeed = parseFloat(speed);
+                newSpeed = newSpeed - 0.50;
+                document.getElementById("speedValue").innerHTML = newSpeed;
+            } else {
+                editReadSpeed(-speed + 0.25);
+                let newSpeed = 0.25;
+                document.getElementById("speedValue").innerHTML = newSpeed;
+            }
             break;
+        }   
         case "speedMax":
             editReadSpeed("max");
             break;
@@ -99,12 +122,34 @@ function keyAction(keybind) {
         case "orderToggle":
             toggleOrder();
             break;
-        case "volumeUp":
-            editVolume(.05);
+        case "volumeUp": {
+            let volume = document.getElementById("volValue").innerHTML;
+            if (parseInt(volume) <= 95){
+                editVolume(0.05);
+                let newVolume = parseInt(volume);
+                newVolume = newVolume + 5;
+                document.getElementById("volValue").innerHTML = newVolume;
+            } else {
+                editVolume(1.00-(volume/100));
+                let newVolume = 100;
+                document.getElementById("volValue").innerHTML = newVolume;
+            }
             break;
-        case "volumeDown":
-            editVolume(-.05);
+        }
+        case "volumeDown": {
+            let volume = document.getElementById("volValue").innerHTML;
+            if (parseInt(volume) >= 5){
+                editVolume(-0.05);
+                let newVolume = parseInt(volume);
+                newVolume = newVolume - 5;
+                document.getElementById("volValue").innerHTML = newVolume;
+            } else {
+                editVolume(-(volume/100) + 0.05);
+                let newVolume = 0;
+                document.getElementById("volValue").innerHTML = newVolume;
+            }
             break;
+        }
         default:
             console.log(keybind);
             break;
