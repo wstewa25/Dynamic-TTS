@@ -10,14 +10,24 @@ document.getElementById('close').addEventListener('click',
 function save_options() {
     // var color = document.getElementById('color').value;
     // var likesColor = document.getElementById('like').checked;
-    var masterKeyVal = document.getElementById('masterKey').value;
-    changeMasterKey(masterKeyVal);
+    // var masterKeyVal = document.getElementById('masterKey').value;
+    // changeMasterKey(masterKeyVal);
+    //
+    var playPauseVal = document.getElementById('pausePlay').value;
+    // changeKeybind('pausePlay', playPauseVal);
+
 
     chrome.storage.sync.set({
-        // favoriteColor: color,
-        // likesColor: likesColor
+        pausePlay: playPauseVal
+
     }, function() {
         // Update status to let user know options were saved.
+        console.log("storage sync set pausePlay should = " + playPauseVal);
+
+        chrome.storage.sync.get(['pausePlay'], function(result){
+            console.log("val actually is " + result.pausePlay);
+        });
+
         var status = document.getElementById('status');
         status.textContent = 'Options saved.';
         setTimeout(function() {
