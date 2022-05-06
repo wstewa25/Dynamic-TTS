@@ -57,12 +57,11 @@ async function keybindsFromStorage() {
      await chrome.storage.sync.get([key], function (result) {
             if (result[key] != undefined) {
                 changeKeybind(key, result[key]);
-                console.log("result[key] = " + result[key])
+                console.log(key + " now = " + result[key])
             } else {
-                console.log("Failed to change keybind. Result[key] = " + result[key]);
+                console.log("Failed to change keybind. " + key + " = " + result[key]);
             }
         });
-
     }
 }
 keybindsFromStorage();
@@ -188,7 +187,7 @@ function changeKeybind(keybind, newKeys) {
     for (let bind in keybinds) {
         if (bind == keybind) {
             keybinds[bind] = newKeys;
-            console.log("CHANGED Key! new key = " + newKeys);
+            console.log("CHANGED Key! new " + bind + " key = " + newKeys);
             return true;
         }
     }
