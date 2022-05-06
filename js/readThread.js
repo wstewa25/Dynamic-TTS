@@ -233,6 +233,9 @@ function playAudio(audio) {
     if (!audio[0] || !(audio[0] instanceof Audio)) return false; // don't attempt to play audio if it's invalid
 
     audio[0].volume = currentVolume; //set volume to current volume specified by user
+    var bodyText;
+    bodyText = audioQueue[0][1];
+    document.getElementById("currentComment").innerHTML = bodyText;
     audio[0].play();
 
     audio[0].addEventListener('ended', audioEnds); // don't play next comment audio until current audio has finished
