@@ -23,12 +23,16 @@ document.addEventListener("DOMContentLoaded", function(){
     
     let settings = document.getElementById("settings");
     let openReader = document.getElementById("openPlayer");
+    let exit = document.getElementById("exit");
     
     settings.addEventListener('click', function() {
         openSettingsPage();
     });
     openPlayer.addEventListener('click', function(){
         openPlayerPage();
+    });
+    exit.addEventListener('click', function(){
+        window.close();
     });
 });
 
