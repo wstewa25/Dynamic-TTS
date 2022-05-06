@@ -55,7 +55,7 @@ async function keybindsFromStorage() {
 
      await chrome.storage.sync.get([key], function (result) {
             if (result[key] != undefined) {
-                changeKeybind(key, result[key]);
+                changeKeybind(key, [result[key]]);
                 console.log(key + " now = " + result[key])
             } else {
                 console.log("Failed to change keybind. " + key + " = " + result[key]);
@@ -66,16 +66,11 @@ async function keybindsFromStorage() {
 }
 keybindsFromStorage();
 
-async function printStorage(){
-
-}
-
 // execute a keybind that's actively pressed down
 function keyAction(keybind) {
     switch (keybind) {
         case "pausePlay":
             togglePlay();
-            //console.log("play toggle");
             break;
         case "commentDown":
             skipComment("down");
