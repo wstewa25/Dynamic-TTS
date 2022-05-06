@@ -100,6 +100,8 @@ window.onload = function() {
     let pause = document.getElementById("pause");
     let skip_forward = document.getElementById("forward");
     let skip_thread = document.getElementById('skip_thread');
+    let back = document.getElementById("back");
+    let back_thread = document.getElementById('back_thread');
     let settings = document.getElementById("settings");
 
     volumePlus.addEventListener("click", function(){
@@ -197,12 +199,20 @@ window.onload = function() {
      });
  
      skip_forward.addEventListener("click", function(){
-         skipComment();
+         skipComment("down");
      });
 
      skip_thread.addEventListener("click", function(){
-        skipThread();
+        skipThread("down");
     });
+
+    back.addEventListener("click", function(){
+        skipComment("up");
+    });
+
+    back_thread.addEventListener("click", function(){
+       skipThread("up");
+   })
 
     settings.addEventListener('click', function() {
         openSettingsPage();
