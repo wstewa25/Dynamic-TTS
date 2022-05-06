@@ -1,4 +1,4 @@
-let readerList = [];
+let readerList = []; 
 
 // just holds tab url
 let activeTab = "";
@@ -63,7 +63,10 @@ function main() {
             // wait just a bit for program to catch up before making readerList
             setTimeout(function() {
                 readerList = reddit.readThread();
+                var bodyText;
                 for (let i = 0; i < readerList.length; i++) {
+                    bodyText = document.createTextNode(readerList[i]);
+                    document.getElementById("miniscreenText").appendChild(bodyText);
                     console.log(readerList[i]);
                 }
             }, 1000);
@@ -100,6 +103,7 @@ window.onload = function() {
     let pause = document.getElementById("pause");
     let skip_forward = document.getElementById("forward");
     let skip_thread = document.getElementById('skip_thread');
+    let miniscreen = document.getElementById("miniscreen");
 
     volumePlus.addEventListener("click", function(){
         let volume = document.getElementById("volValue").innerHTML;
@@ -201,6 +205,18 @@ window.onload = function() {
 
      skip_thread.addEventListener("click", function(){
         skipThread();
+    });
+
+    miniscreen.addEventListener("click", function(){
+        //alert("Miniscreen option was clicked");
+        if(document.getElementById("miniscreenContent").style.display != "inline"){
+            document.getElementById("miniscreenContent").style.display = "inline";
+            document.getElementById("main").style.width = "250px";
+        }else{
+            document.getElementById("miniscreenContent").style.display = "none";
+
+        }
+        
     });
 };
 
