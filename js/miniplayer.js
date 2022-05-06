@@ -102,6 +102,7 @@ window.onload = function() {
     let skip_thread = document.getElementById('skip_thread');
     let back = document.getElementById("back");
     let back_thread = document.getElementById('back_thread');
+    let stop = document.getElementById("stop");
 
     volumePlus.addEventListener("click", function(){
         let volume = document.getElementById("volValue").innerHTML;
@@ -211,6 +212,10 @@ window.onload = function() {
 
     back_thread.addEventListener("click", function(){
        skipThread("up");
+   });
+
+   stop.addEventListener("click", function(){
+    stopAudio(audioQueue[0][0]);
    });
 
     function getQueryString() {
