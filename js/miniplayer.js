@@ -188,10 +188,10 @@ window.onload = function() {
     });
 
     pause.addEventListener('click', function(){
-        if (pause.innerHTML == '<i class="material-icons">pause</i>Pause')
-            pause.innerHTML = '<i class="material-icons">play_arrow</i>Play';
+        if (pause.innerHTML == '<i class="material-icons">pause</i>')
+            pause.innerHTML = '<i class="material-icons">play_arrow</i>';
         else
-            pause.innerHTML = '<i class="material-icons">pause</i>Pause';
+            pause.innerHTML = '<i class="material-icons">pause</i>';
     });
 
     pause.addEventListener("click", function (){
