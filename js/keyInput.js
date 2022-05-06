@@ -40,10 +40,10 @@ let keyDefaults = {
     // decrement volume by 1 unit
     volumeDown: [ "Comma" ],
 };
-
-let keybinds = keyDefaults; // second dictionary should be used for active keybinds that can be changed
 // use one key to tell extension that it should use its keybinds
 keyDefaults.masterKey = "Shift"; // js has "ShiftLeft" and "ShiftRight", both should be viable
+let keybinds = keyDefaults; // second dictionary should be used for active keybinds that can be changed
+
 let masterKey = keyDefaults.masterKey;
 let masterPressed = false;
 let keyStrokes = {};
@@ -188,6 +188,8 @@ function changeMasterKey(newKey) {
     } else {
         // no conflicts
         masterKey = newKey;
+        keybinds.masterKey = newKey;
+        console.log("changeMasterKey: MASTER key changed! new key = " + newKey);
         return true;
     }
 }
