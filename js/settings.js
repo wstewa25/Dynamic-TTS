@@ -8,16 +8,35 @@ document.getElementById('close').addEventListener('click',
 
 // Saves options to chrome.storage
 function save_options() {
-    // var color = document.getElementById('color').value;
-    // var likesColor = document.getElementById('like').checked;
-    var masterKeyVal = document.getElementById('masterKey').value;
-    changeMasterKey(masterKeyVal);
+    var playPauseVal = document.getElementById('pausePlay').value;
+    var comDownVal = document.getElementById('commentDown').value;
+    var comUpVal = document.getElementById('commentUp').value;
+    var speedUpVal = document.getElementById('speedUp').value;
+    var slowDownVal = document.getElementById('slowDown').value;
+    var volUpVal = document.getElementById('volumeUp').value;
+    var volDownVal = document.getElementById('volumeDown').value;
 
-    chrome.storage.sync.set({
-        // favoriteColor: color,
-        // likesColor: likesColor
-    }, function() {
+    let settingVals = {
+        pausePlay: playPauseVal,
+        commentDown: comDownVal,
+        commentUp: comUpVal,
+        speedUp: speedUpVal,
+        slowDown: slowDownVal,
+        volumeUp: volUpVal,
+        volumeDown: volDownVal
+    };
+
+    chrome.storage.sync.set(settingVals, function() {
         // Update status to let user know options were saved.
+
+        for(let setting in settingVals)
+        //console.log("storage sync set pausePlay should = " + playPauseVal);
+
+            //check to see if it stored
+        chrome.storage.sync.get([setting], function(result){
+            console.log("setting.js setting is " + result[setting]);
+        });
+
         var status = document.getElementById('status');
         status.textContent = 'Options saved.';
         setTimeout(function() {

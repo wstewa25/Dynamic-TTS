@@ -41,12 +41,17 @@ div {
     /*grid-gap: 5px;*/
 }
 
+label {
+    padding-bottom: 20px;
+    /*border: 3px solid green;*/
+    display: inline-block;
+}
+
 /* Create two unequal columns that floats next to each other */
 .column {
     /*float: left;*/
     /*padding: 20px;*/
-    border: 2px solid red
-    /*height: auto; !* Should be removed. Only for demonstration *!*/
+    border: 2px solid red;
 }
 
 .left {
@@ -54,7 +59,7 @@ div {
 }
 
 .right{
-    width: 600px;
+    width: 800px;
     color: white;
     font-size: 20px;
 }

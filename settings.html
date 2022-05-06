@@ -18,32 +18,59 @@
 <body>
 
 <div class="row">
-    <div class="column left" style="background-color:#221f1f;">
-        <h2>Options</h2>
-        <button type="button" id="voices">Voices</button>
-        <button type="button" id="keybinds">Keybinds</button>
-    </div>
+<!--    <div class="column left" style="background-color:#221f1f;">-->
+<!--        <h2>Options</h2>-->
+<!--        <button type="button" id="voices">Voices</button>-->
+<!--        <button type="button" id="keybinds">Keybinds</button>-->
+<!--    </div>-->
 
-    <div class="column right" style="background-color:#424040;">
-        <h2>Keybinds</h2>
-        <label for="masterKey">Master Key:</label>
-        <select name="masterKey" id="masterKey">
-            <option value="Shift">Shift</option>
-            <option value="Alt">Alt</option>
-            <option value="Control">Control</option>
-        </select>
-        <br>
+    <div class="right" style="background-color:#424040;">
+        <h2>Keybind Options</h2>
         <label for="pausePlay">Pause/Play:</label>
         <select name="pausePlay" id="pausePlay">
             <option value="Space">Space</option>
-            <option value="p">p</option>
-            <option value="t">t</option>
+            <option value="KeyP">p</option>
+            <option value="KeyT">t</option>
         </select>
-        <p>Stop: </p>
-        <p>Skip Forward: </p>
-        <p>Skip Backward: </p>
-        <p>Slow Down: </p>
-        <p>Speed Up: </p>
+        <br>
+        <label for="commentDown">Skip Forward:</label>
+        <select name="commentDown" id="commentDown">
+            <option value="ArrowDown">Arrow Down</option>
+            <option value="ArrowRight">Arrow Right</option>
+            <option value="KeyW">w</option>
+        </select>
+        <br>
+        <label for="commentUp">Skip Backward:</label>
+        <select name="commentUp" id="commentUp">
+            <option value="ArrowUp">Arrow Up</option>
+            <option value="ArrowLeft">Arrow Left</option>
+            <option value="KeyQ">q</option>
+        </select>
+        <br>
+        <label for="speedUp">Speed Up:</label>
+        <select name="speedUp" id="speedUp">
+            <option value="ArrowRight">Arrow Right</option>
+            <option value="KeyS">s</option>
+        </select>
+        <br>
+        <label for="slowDown">Slow Down:</label>
+        <select name="slowDown" id="slowDown">
+            <option value="ArrowLeft">Arrow Left</option>
+            <option value="KeyA">a</option>
+        </select>
+        <br>
+        <label for="volumeUp">Volume Up:</label>
+        <select name="volumeUp" id="volumeUp">
+            <option value="Period">Period (.)</option>
+            <option value="Equal">Equal (=)</option>
+        </select>
+        <br>
+        <label for="volumeDown">Volume Down:</label>
+        <select name="volumeDown" id="volumeDown">
+            <option value="Comma">Comma (,)</option>
+            <option value="Minus">Minus (-)</option>
+        </select>
+        <br>
     </div>
 
 <!--    <div class="column right" style="background-color:#424040;">-->

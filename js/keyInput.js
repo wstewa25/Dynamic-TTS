@@ -48,6 +48,24 @@ let masterKey = keyDefaults.masterKey;
 let masterPressed = false;
 let keyStrokes = {};
 
+async function keybindsFromStorage() {
+    for (let key in keybinds) {
+        // console.log("key name = " + key);
+        // console.log("key value = " + keybinds[key]);
+
+     await chrome.storage.sync.get([key], function (result) {
+            if (result[key] != undefined) {
+                changeKeybind(key, [result[key]]);
+                console.log(key + " now = " + result[key])
+            } else {
+                console.log("Failed to change keybind. " + key + " = " + result[key]);
+            }
+        });
+    }
+    console.log("keybinds masterkey = " + keybinds.masterKey);
+}
+keybindsFromStorage();
+
 // execute a keybind that's actively pressed down
 function keyAction(keybind) {
     switch (keybind) {
@@ -164,6 +182,7 @@ function changeKeybind(keybind, newKeys) {
     for (let bind in keybinds) {
         if (bind == keybind) {
             keybinds[bind] = newKeys;
+            console.log("CHANGED Key! new " + bind + " key = " + newKeys);
             return true;
         }
     }

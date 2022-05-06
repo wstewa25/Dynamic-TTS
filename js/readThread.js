@@ -34,6 +34,7 @@ function togglePlay() {
             audioQueue[0][0].play();
         }
     }
+    console.log("play toggled");
 }
 
 // go to next comment (down) or the previously played comment (up)
@@ -51,6 +52,7 @@ function skipComment(direction) {
             playAudio(audioQueue[0]);
         }
     }
+    console.log("skipped " + direction);
 }
 
 // go to the next comment thread (the next "<author> says: " comment)
@@ -110,6 +112,7 @@ function editVolume(amount) {
             currentVolume += amount; // if no conflicts then add amount normally
         }
     }
+    console.log("changed volume " + amount);
 }
 
 // reload audio with new TTS read speed. this restarts from currently reading comment
@@ -181,6 +184,7 @@ function editReadSpeed(amount) {
             }, 100);
         }
     }
+    console.log("changed speed " + amount);
 }
 
 // reverse reading order of comments
@@ -325,8 +329,6 @@ async function postData(url = '', data = {}) {
         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
         body: JSON.stringify(data) // body data type must match "Content-Type" header
     });
-
-    
 
     return response.json(); // parses JSON response into native JavaScript objects
 }
