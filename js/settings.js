@@ -13,13 +13,17 @@ function save_options() {
     var comUpVal = document.getElementById('commentUp').value;
     var speedUpVal = document.getElementById('speedUp').value;
     var slowDownVal = document.getElementById('slowDown').value;
+    var volUpVal = document.getElementById('volumeUp').value;
+    var volDownVal = document.getElementById('volumeDown').value;
 
     let settingVals = {
         pausePlay: playPauseVal,
         commentDown: comDownVal,
         commentUp: comUpVal,
         speedUp: speedUpVal,
-        slowDown: slowDownVal
+        slowDown: slowDownVal,
+        volumeUp: volUpVal,
+        volumeDown: volDownVal
     };
 
     chrome.storage.sync.set(settingVals, function() {
