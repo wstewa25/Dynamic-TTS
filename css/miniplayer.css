@@ -1,0 +1,61 @@
+body {
+  background-color: #221f1f;
+  margin: 0px;
+  width: 260px;
+  padding-bottom: 10px;
+}
+
+.material-icons {
+  color: white;
+  background-color: transparent;
+}
+
+.main-controls {
+  width: 100%;
+}
+
+.main-controls button {
+  height: 70px;
+  width: 25%;
+  border: none;
+  float: left;
+}
+
+button:hover {
+  background-color: #2e3233
+}
+
+i {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.volText h3, .speedText h3 {
+  float: left;
+  color: white;
+  padding-left: 5%;
+  width: 40%;
+}
+
+.speedChange, .volChange {
+  width: 100%;
+}
+
+.startstop button {
+  width: 100%;
+  text-align: left;
+}
+
+.speedChange input, .volChange input {
+  width: 25%;
+  padding-right: 0px;
+  float: left;
+  background-color: transparent;
+  color: white;
+  border-color: transparent;
+  font-size: 18pt;
+}
+
+#currentcomment {
+  width: 100%;
+}
