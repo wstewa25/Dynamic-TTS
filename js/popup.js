@@ -21,11 +21,6 @@ document.addEventListener("DOMContentLoaded", function(){
         return queryString;
     }
     
-    function closePlayerPage(){
-        var queryString = getQueryString();
-        location.href = queryString.referer;
-    }
-    
     let settings = document.getElementById("settings");
     let openReader = document.getElementById("openPlayer");
     
