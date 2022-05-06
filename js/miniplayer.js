@@ -1,73 +1,222 @@
-window.onload = function() { //not working for now, because of data problems.
+let readerList = [];
+
+// just holds tab url
+let activeTab = "";
+let tabTrimmed = "";
+
+let reddit = new redditor();
+
+function init() {
+    // everything needs to execute after the active tab has been found
+    getCurrentTab().then(result => {
+        main();
+    });
+}
+
+function trimURL(url) {
+    let maxLength = 20; // maximum character length
+
+    if (url.includes("file://")) { // if tab is a file from machine
+        let urlBeginning = url.substring(0, 7); // keep "file://"
+        let split = url.split("/"); // split at / to isoalte the file name
+        let newURL = urlBeginning + split[split.length - 1];
+
+        if (newURL.length > maxLength) // don't let name exceed max character length
+            newURL = newURL.substring(0, maxLength) + "...";
+
+        return newURL;
+    } else if (url.includes("chrome://")) { // if tab is a chrome page
+        if (url.length > maxLength)
+            url = url.substring(0, maxLength) + "...";
+
+        return url;
+    } else { // website
+        // detach "http(s)://www." prefix if it exists in the tab name
+        let split = url.split("://");
+        let newURL = split[split.length - 1];
+
+        if (newURL.includes("www.")) { // separated from http(s):// in case a url has one or the other but not both
+            newURL = newURL.substring(4);
+        }
+
+        // i only want the website name
+        newURL = newURL.split("/")[0];
+
+        if (newURL.length > maxLength)
+            newURL = newURL.substring(0, maxLength) + "...";
+        
+        return newURL;
+    }
+}
+
+function main() {
+    activeTab = document.getElementById("currentTab").innerHTML;
+    tabTrimmed = trimURL(activeTab);
+
+    if (activeTab.includes("reddit.com/")) { // only works if you're viewing a submission
+        if (activeTab.includes("/comments/")) {
+            let submissionID = activeTab.split("/");
+            submissionID = submissionID[submissionID.indexOf("comments") + 1]; // post id comes after /comments/
+
+            reddit.getComments(submissionID);
+
+            // wait just a bit for program to catch up before making readerList
+            setTimeout(function() {
+                readerList = reddit.readThread();
+                for (let i = 0; i < readerList.length; i++) {
+                    console.log(readerList[i]);
+                }
+            }, 1000);
+        }
+    }
+}
+
+async function getCurrentTab() {
+    let queryOptions = { active: true, currentWindow: true };
+    let [tab] = await chrome.tabs.query(queryOptions);
+    document.getElementById("currentTab").innerHTML = tab.url;
+    document.getElementById("currentTab").style.display = "none";
+    return tab;
+  }
+
+window.onload = function() {
+    init();
+//function to switch to miniplayer when play button clicked, not implemented for now.
+    // let play_listener = document.getElementById("play"); // play button makes miniplayer pop up
+    // play_listener.addEventListener("click", function(){
+    //     window.location.assign("/miniplayer.html");
+    //     init();
+    // }); 
 
     let volumePlus = document.getElementById("volumePlus");
     let volumeMinus = document.getElementById("volumeMinus");
+    let volumePlusPlus = document.getElementById("volumePlusPlus");
+    let volumeMinusMinus = document.getElementById("volumeMinusMinus");
     let speedPlus = document.getElementById("speedPlus");
     let speedMinus = document.getElementById("speedMinus");
+    let speedPlusPlus = document.getElementById("speedPlusPlus");
+    let speedMinusMinus = document.getElementById("speedMinusMinus");
     let close = document.getElementById("close");
+    let pause = document.getElementById("pause");
+    let skip_forward = document.getElementById("forward");
+    let skip_thread = document.getElementById('skip_thread');
+    let back = document.getElementById("back");
+    let back_thread = document.getElementById('back_thread');
+    let settings = document.getElementById("settings");
 
     volumePlus.addEventListener("click", function(){
-        let volume = document.getElementById("volValue");
-        volume.innerHTML = parseInt(volume.innerHTML) + 1;
-        editVolume(0.01);
+        let volume = document.getElementById("volValue").innerHTML;
+        if (parseInt(volume) != 100){
+            editVolume(0.01);
+            let newVolume = parseInt(volume);
+            newVolume = newVolume + 1;
+            document.getElementById("volValue").innerHTML = newVolume;
+        }
     });
     volumeMinus.addEventListener("click", function(){
-        let volume = document.getElementById("volValue");
-        volume.innerHTML = parseInt(volume.innerHTML) - 1;
-        editVolume(-0.01);
+        let volume = document.getElementById("volValue").innerHTML;
+        if (parseInt(volume) != 0){
+            editVolume(-0.01);
+            let newVolume = parseInt(volume);
+            newVolume = newVolume - 1;
+            document.getElementById("volValue").innerHTML = newVolume;
+        }
+    });
+    volumePlusPlus.addEventListener("click", function(){
+        let volume = document.getElementById("volValue").innerHTML;
+        if (parseInt(volume) != 100){
+            editVolume(0.10);
+            let newVolume = parseInt(volume);
+            newVolume = newVolume + 10;
+            document.getElementById("volValue").innerHTML = newVolume;
+        }
+    });
+    volumeMinusMinus.addEventListener("click", function(){
+        let volume = document.getElementById("volValue").innerHTML;
+        if (parseInt(volume) != 0){
+            editVolume(-0.10);
+            let newVolume = parseInt(volume);
+            newVolume = newVolume - 10;
+            document.getElementById("volValue").innerHTML = newVolume;
+        }
     });
 
     speedPlus.addEventListener("click", function(){
-        let speed = document.getElementById("speedValue");
-        if (!processingReadSpeedRequest){
-        console.log("edit read speed");
-        editReadSpeed(0.25);
-        console.log("changed read speed to " + readSpeed.current);
+        let speed = document.getElementById("speedValue").innerHTML;
+        if (parseFloat(speed) != 4.00){
+            editReadSpeed(0.25);
+            let newSpeed = parseFloat(speed);
+            newSpeed = newSpeed + 0.25;
+            document.getElementById("speedValue").innerHTML = newSpeed;
         }
-        speed.InnerHTML = readSpeed.current;
     });
     speedMinus.addEventListener("click", function(){
-        let speed = document.getElementById("speedValue");
-        editReadSpeed(-0.25);
-        speed.InnerHTML = readSpeed.current;
-    });
-
-    close.addEventListener('click', function(){
-        window.location.assign("/popup.html");
-    }); //go back to popup when X clicked
-
-
-
-
-    let play_listener = document.getElementById("play"); // button click to tell tts to start
-    play_listener.addEventListener("click", function(){
-        // console.log(readerList);
-        audioQueue = []; // re-initialize the queue each time a request is made
-        for (let i = 0; i < readerList.length; i++)
-            audioQueue.push("."); // fill the queue with blank strings so that each index is non-null. this is important for filling each index spot with content asynchronously
-
-        for (let i = 0; i < readerList.length; i++) { // convert each string in reader list to audio content ready to be played
-            callTTS(readerList[i], i);
+        let speed = document.getElementById("speedValue").innerHTML;
+        if (parseFloat(speed) != 0.25){
+            editReadSpeed(-0.25);
+            let newSpeed = parseFloat(speed);
+            newSpeed = newSpeed - 0.25;
+            document.getElementById("speedValue").innerHTML = newSpeed;
         }
-
-        // console.log(audioQueue);
-        
-        // because callTTS is asynchronous, this part of the method is reached before audioQueue is properly set up
-        // this creates a repeating timer that checks if audioQueue has been properly filled every 100ms
-        let tester = setInterval(() => {
-            let equal = true;
-            for (let i = 0; i < readerList.length; i++) { // loop through each spot in readerList to see if audioQueue has each comment's audio ready
-                if (audioQueue[i][1] != readerList[i]) {
-                    equal = false;
-                    break;
-                }
-            }
-
-            if (equal) {
-                clearInterval(tester);
-                playAudio(audioQueue[0]); // only play audio once audioQueue matches readerList
-            }
-        }, 100);
     });
-}
+    speedPlusPlus.addEventListener("click", function(){
+        let speed = document.getElementById("speedValue").innerHTML;
+        if (parseFloat(speed) <= 3.00){
+            editReadSpeed(1.00);
+            let newSpeed = parseFloat(speed);
+            newSpeed = newSpeed + 1.00;
+            document.getElementById("speedValue").innerHTML = newSpeed;
+        } else {
+            editReadSpeed(4.00-speed);
+            let newSpeed = parseFloat(speed);
+            newSpeed = newSpeed + (4.00-speed);
+            document.getElementById("speedValue").innerHTML = newSpeed;
+        }
+    });
+    speedMinusMinus.addEventListener("click", function(){
+        let speed = document.getElementById("speedValue").innerHTML;
+        if (parseFloat(speed) >= 1.25){
+            editReadSpeed(-1.00);
+            let newSpeed = parseFloat(speed);
+            newSpeed = newSpeed - 1.00;
+            document.getElementById("speedValue").innerHTML = newSpeed;
+        } else {
+            editReadSpeed(-speed + 0.25);
+            let newSpeed = 0.25
+            document.getElementById("speedValue").innerHTML = newSpeed;
+        }
+    });
+
+    pause.addEventListener('click', function(){
+        if (pause.innerHTML == '<i class="material-icons">pause</i>Pause')
+            pause.innerHTML = '<i class="material-icons">play_arrow</i>Play';
+        else
+            pause.innerHTML = '<i class="material-icons">pause</i>Pause';
+    });
+
+    pause.addEventListener("click", function (){
+        togglePlay();
+     });
+ 
+     skip_forward.addEventListener("click", function(){
+         skipComment("down");
+     });
+
+     skip_thread.addEventListener("click", function(){
+        skipThread("down");
+    });
+
+    back.addEventListener("click", function(){
+        skipComment("up");
+    });
+
+    back_thread.addEventListener("click", function(){
+       skipThread("up");
+   })
+
+    settings.addEventListener('click', function() {
+        openSettingsPage();
+    });
+};
+
 
