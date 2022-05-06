@@ -98,10 +98,10 @@ window.onload = function() {
     let speedMinusMinus = document.getElementById("speedMinusMinus");
     let close = document.getElementById("close");
     let pause = document.getElementById("pause");
-    let skip_forward = document.getElementById("forward");
-    let skip_thread = document.getElementById('skip_thread');
-    let back = document.getElementById("back");
-    let back_thread = document.getElementById('back_thread');
+    let skip_forward = document.getElementById("forwardComment");
+    let skip_thread = document.getElementById('forwardThread');
+    let back = document.getElementById("backComment");
+    let back_thread = document.getElementById('backThread');
     let stop = document.getElementById("stop");
 
     volumePlus.addEventListener("click", function(){

@@ -17,14 +17,17 @@
         <script type="text/javascript" src="js/redditor.js"></script>
         <script type="text/javascript" src="js/readThread.js"></script>
         <script type="text/javascript" src="js/miniplayer.js"></script>
-        <script type="text/javascript" src="js/keyInput.js"></script>
         <script type="text/javascript" src="js/readThreadButton.js"></script>
+        <script type="text/javascript" src="js/keyInput.js"></script>
     </head>
+
+    <p id="currentTab" type="hidden">tab</p>
 
  <body id="main">
     <div class="startstop">
-        <button type="button" id="play"><i class="material-icons">play_arrow</i>Read Thread</button>
-        <button type="button" id="stop"><i class="material-icons">stop</i>Stop</button>
+        <button type="button" id="close"><i class="material-icons">arrow_back</i>Back</button>
+        <button type="button" id="play"><i class="material-icons">play_arrow</i>Read Comments</button>
+        <button type="button" id="stop"><i class="material-icons">stop</i>Stop Reading</button>
     </div>
 
     <input type="text" readonly id="currentcomment">
@@ -32,6 +35,7 @@
     <div class="main-controls">
         <button type="button" id="backThread"><i class="material-icons" style="font-size: 40px">fast_rewind</i></button>
         <button type="button" id="backComment"><i class="material-icons" style="font-size: 40px">chevron_left</i></button>
+        <button type="button" id="pause"><i class="material-icons">pause</i></button>
         <button type="button" id="forwardComment"><i class="material-icons" style="font-size: 40px">chevron_right</i></button>
         <button type="button" id="forwardThread"><i class="material-icons" style="font-size: 40px">fast_forward</i></button>
     </div>
