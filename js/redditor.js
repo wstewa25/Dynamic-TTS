@@ -44,7 +44,6 @@ class redditor {
     
         // get each reply and loop recursively so all comments are in the same format
         comment.replies.forEach(r => {
-            //console.log(c.body);
             c.replies.push(this.getAllReplies(r));
         });
     

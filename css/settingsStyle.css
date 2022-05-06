@@ -1,0 +1,67 @@
+* {
+    /*margin: 0;*/
+    /*padding: 0;*/
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+body {
+    min-height: 400px;
+    min-width: 800px;
+    /*max-width: min-content;*/
+    background-color: #221f1f;
+    margin: 0 auto;
+}
+
+h2{
+    color: white;
+    font-size: 28px;
+}
+
+button {
+    height: 40px;
+    width: 200px;
+    background-color: #221f1f;
+    color: white;
+    border: none;
+    text-align: left;
+    font-size: 20px;
+}
+button:hover {
+    background-color: #2e3233
+}
+
+div {
+    display: inline-block;
+}
+.row {
+    border: 3px solid #9910ee;
+    display: grid;
+    grid-template-columns: .25fr .75fr;
+    /*grid-gap: 5px;*/
+}
+
+/* Create two unequal columns that floats next to each other */
+.column {
+    /*float: left;*/
+    /*padding: 20px;*/
+    border: 2px solid red
+    /*height: auto; !* Should be removed. Only for demonstration *!*/
+}
+
+.left {
+    width: 200px;
+}
+
+.right{
+    width: 600px;
+    color: white;
+    font-size: 20px;
+}
+
+ /*Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}

@@ -1,46 +1,35 @@
 body {
-  background-color: #221f1f;
-  margin: 0px;
-  color: white;
+    background-color: #221f1f;
+    margin: 0px;
+    color: white;
+  }
   
-}
-
-button {
-  height: 40px;
-  width: 200px;
-  background-color: #221f1f;
-  color: white;
-  border: none;
-  text-align: left;
-  font-size: 20px;
-}
-
-button:hover {
-  background-color: #2e3233
-}
-
-.material-icons {
-  margin-right: 10px;
-  padding: 0px;
-  vertical-align: middle;
+  button {
+    height: 40px;
+    width: 200px;
+    background-color: #221f1f;
+    color: white;
+    border: none;
+    text-align: left;
+    font-size: 20px;
+  }
+  
+  button:hover {
+    background-color: #2e3233
+  }
+  
+  .material-icons {
+    margin-right: 10px;
+    padding: 0px;
+    vertical-align: middle;
 }
 
 * {
-  font-family: 'Ubuntu', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 #tabName {
-  color: #ffffff;
-  text-align: center;
-  font-size: 14px;
-}
-
-#miniscreenContent {
-color: black;
-width:250px;
-display: none;
-}
-
-#miniscreenContent p{
-background-color: #ffffff;
+    color: #ffffff;
+    text-align: center;
+    font-size: 14px;
 }

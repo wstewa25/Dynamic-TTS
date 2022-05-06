@@ -1,6 +1,10 @@
 
   {
     "name": "Extension Demo",
+    "options_ui": {
+      "page": "settings.html",
+      "open_in_tab": false
+    },
     "version": "1.0",
     "description": "A text reader that reads through comment threads with unique voices in a conversational style",
     "icons": {"48": "icon.png"},
@@ -8,7 +12,8 @@
       "activeTab",
       "tabs",
       "webRequest",
-      "tts"
+      "tts",
+      "storage"
      ],
     "action": {
       "default_icon": "icon.png",
