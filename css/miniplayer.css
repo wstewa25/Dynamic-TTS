@@ -57,7 +57,9 @@ i {
 }
 
 #currentcomment {
+  color:black;
   width: 100%;
+  padding: 20px;
 }
 
 #commentTextBox{
