@@ -58,7 +58,7 @@ i {
 
 #currentComment {
   color:black;
-  width: 100%;
+  width: 75%;
   padding: 20px;
   margin-left: auto;
   margin-right: auto;
@@ -66,4 +66,5 @@ i {
 
 #commentTextBox{
   background-color: white;
+  width:250px;
 }
