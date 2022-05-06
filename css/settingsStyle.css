@@ -47,6 +47,11 @@ label {
     display: inline-block;
 }
 
+text{
+    color: rgba(253, 232, 173, 0.89);
+    font-size: 16px;
+}
+
 /* Create two unequal columns that floats next to each other */
 .column {
     /*float: left;*/
