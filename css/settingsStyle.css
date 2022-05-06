@@ -35,7 +35,6 @@ div {
     display: inline-block;
 }
 .row {
-    border: 3px solid #9910ee;
     display: grid;
     grid-template-columns: .25fr .75fr;
     /*grid-gap: 5px;*/
