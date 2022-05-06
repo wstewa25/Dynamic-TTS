@@ -59,3 +59,7 @@ i {
 #currentcomment {
   width: 100%;
 }
+
+#commentTextBox{
+  background-color: white;
+}
