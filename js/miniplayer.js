@@ -102,7 +102,6 @@ window.onload = function() {
     let skip_thread = document.getElementById('skip_thread');
     let back = document.getElementById("back");
     let back_thread = document.getElementById('back_thread');
-    let settings = document.getElementById("settings");
 
     volumePlus.addEventListener("click", function(){
         let volume = document.getElementById("volValue").innerHTML;
@@ -212,11 +211,29 @@ window.onload = function() {
 
     back_thread.addEventListener("click", function(){
        skipThread("up");
-   })
+   });
 
-    settings.addEventListener('click', function() {
-        openSettingsPage();
-    });
-};
+    function getQueryString() {
+        return location.search ? parseQueryString(location.search) : {};
+    }
+    
+    function parseQueryString(search) {
+        if (search.charAt(0) != '?') throw new Error("Invalid argument");
+        var queryString = {};
+        search.substr(1).replace(/\+/g, '%20').split('&').forEach(function(tuple) {
+            var tokens = tuple.split('=');
+            queryString[decodeURIComponent(tokens[0])] = tokens[1] && decodeURIComponent(tokens[1]);
+        })
+        return queryString;
+    }
+    
+    function closePlayerPage(){
+        var queryString = getQueryString();
+        location.href = queryString.referer;
+    }
+    
+    document.getElementById('close').addEventListener('click',
+    closePlayerPage);
+}
 
 
